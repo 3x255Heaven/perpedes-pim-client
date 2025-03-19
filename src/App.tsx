@@ -1,11 +1,11 @@
-import Layout from "./layouts/layout";
+import ApplicationLayout from "./layouts/app-layout";
 
 function App() {
   return (
     <div className="flex flex-col items-center justify-center min-h-svh">
-      <Layout>
+      <ApplicationLayout>
         <></>
-      </Layout>
+      </ApplicationLayout>
     </div>
   );
 }
