@@ -113,7 +113,7 @@ export const columns: ColumnDef<Log>[] = [
   },
 ];
 
-export const ImportHistory = ({ data }: { data: Log[] }) => {
+export const ImportHistoryTable = ({ data }: { data: Log[] }) => {
   const table = useReactTable({
     data,
     columns,

@@ -28,6 +28,7 @@ export const platformNavigationItems = [
     title: "Orders",
     url: "/",
     icon: ClipboardList,
+    isActive: true,
     items: [
       {
         title: "View All Orders",
@@ -43,6 +44,7 @@ export const platformNavigationItems = [
     title: "Customers",
     url: "/",
     icon: ShoppingCart,
+    isActive: true,
     items: [
       {
         title: "View All Customers",
@@ -54,6 +56,7 @@ export const platformNavigationItems = [
     title: "Employees",
     url: "/",
     icon: PersonStanding,
+    isActive: true,
     items: [
       {
         title: "View All Employees",
@@ -88,6 +91,7 @@ export const analyticsNavigationItems = [
     title: "Sales Reports",
     url: "/",
     icon: ChartNoAxesCombined,
+    isActive: true,
     items: [
       {
         title: "Top-Performing Products",

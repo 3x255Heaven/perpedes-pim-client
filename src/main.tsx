@@ -1,13 +1,23 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import ApplicationLayout from "@/layouts/ApplicationLayout";
-import { AddProducts } from "@/pages/products/AddProducts.tsx";
-import { Products } from "@/pages/products/Products.tsx";
-import { Product } from "@/pages/products/Product.tsx";
-import "./index.css";
 import { ThemeProvider } from "./components/Theme/ThemeProvider";
+import { ApplicationLayout } from "@/layouts/ApplicationLayout";
 import { NotFound } from "./components/NotFound/NotFound";
+import { ManageProducts } from "@/pages/products/ManageProducts/ManageProducts";
+import { Products } from "@/pages/products/Products/Products";
+import { Product } from "@/pages/products/Product/Product";
+import { Orders } from "@/pages/orders/Orders";
+import { Customers } from "@/pages/customers/Customers";
+import { CreateOrders } from "@/pages/orders/CreateOrder";
+import { Employees } from "@/pages/employees/Employees";
+import { AddEmployee } from "@/pages/employees/AddEmployee";
+import { SalesOverview } from "@/pages/dashboard/SalesOverview";
+import { CustomerOverview } from "@/pages/dashboard/CustomerOverview";
+import { PerformingProducts } from "@/pages/sales/PerformingProducts";
+import { UnderPerformingProducts } from "@/pages/sales/UnderperformingProducts";
+
+import "./index.css";
 
 const router = createBrowserRouter([
   {
@@ -15,10 +25,25 @@ const router = createBrowserRouter([
     element: <ApplicationLayout />,
     errorElement: <NotFound />,
     children: [
-      { index: true, element: <AddProducts /> },
-      { path: "add-product", element: <AddProducts /> },
+      { index: true, element: <ManageProducts /> },
+      { path: "add-product", element: <ManageProducts /> },
       { path: "products", element: <Products /> },
       { path: "product", element: <Product /> },
+      { path: "orders", element: <Orders /> },
+      { path: "create-order", element: <CreateOrders /> },
+      { path: "customers", element: <Customers /> },
+      { path: "employees", element: <Employees /> },
+      { path: "add-employee", element: <AddEmployee /> },
+      { path: "analytics-sales", element: <SalesOverview /> },
+      { path: "analytics-customers", element: <CustomerOverview /> },
+      {
+        path: "analytics-performing-products",
+        element: <PerformingProducts />,
+      },
+      {
+        path: "analytics-underperforming-products",
+        element: <UnderPerformingProducts />,
+      },
     ],
   },
 ]);

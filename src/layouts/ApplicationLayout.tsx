@@ -1,13 +1,4 @@
 import { SidebarWrapper } from "@/components/Sidebar/sidebar-wrapper";
-import { ThemeToggle } from "@/components/Theme/ThemeToggle";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/shared/breadcrumb";
 import { Separator } from "@/shared/separator";
 import {
   SidebarInset,
@@ -15,8 +6,10 @@ import {
   SidebarTrigger,
 } from "@/shared/sidebar";
 import { Outlet } from "react-router-dom";
+import { Breadcrumbs } from "@/layouts/partials/Breadcrumbs";
+import { ThemeToggle } from "@/components/Theme/ThemeToggle";
 
-export default function ApplicationLayout() {
+export const ApplicationLayout = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-svh">
       <SidebarProvider>
@@ -27,17 +20,7 @@ export default function ApplicationLayout() {
               <SidebarTrigger className="-ml-1" />
               <Separator orientation="vertical" className="mr-2 h-4" />
               <div className="flex w-full justify-between items-center">
-                <Breadcrumb>
-                  <BreadcrumbList>
-                    <BreadcrumbItem className="hidden md:block">
-                      <BreadcrumbLink href="#">Products</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator className="hidden md:block" />
-                    <BreadcrumbItem>
-                      <BreadcrumbPage>Overview</BreadcrumbPage>
-                    </BreadcrumbItem>
-                  </BreadcrumbList>
-                </Breadcrumb>
+                <Breadcrumbs />
                 <ThemeToggle />
               </div>
             </div>
@@ -47,4 +30,4 @@ export default function ApplicationLayout() {
       </SidebarProvider>
     </div>
   );
-}
+};
