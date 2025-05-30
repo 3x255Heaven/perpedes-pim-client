@@ -7,13 +7,13 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/shared/breadcrumb";
-import { Separator } from "@/components/shared/separator";
+} from "@/shared/breadcrumb";
+import { Separator } from "@/shared/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/shared/sidebar";
+} from "@/shared/sidebar";
 import { Outlet } from "react-router-dom";
 
 export default function ApplicationLayout() {

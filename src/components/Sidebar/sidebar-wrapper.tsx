@@ -9,7 +9,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/shared/sidebar";
+} from "@/shared/sidebar";
 
 import { user } from "@/mocks/mock";
 import {

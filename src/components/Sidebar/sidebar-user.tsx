@@ -1,10 +1,6 @@
 import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/shared/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,13 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/shared/dropdown-menu";
+} from "@/shared/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/shared/sidebar";
+} from "@/shared/sidebar";
 
 export function SidebarUser({
   user,

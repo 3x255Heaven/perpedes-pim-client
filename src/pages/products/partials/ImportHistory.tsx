@@ -15,7 +15,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/shared/table";
+} from "@/shared/table";
 
 import {
   BanIcon,
@@ -33,10 +33,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/shared/select";
+} from "@/shared/select";
 
-import { Button } from "@/components/shared/button";
-import { Badge } from "@/components/shared/badge";
+import { Button } from "@/shared/button";
+import { Badge } from "@/shared/badge";
 
 export type Log = {
   id: number;

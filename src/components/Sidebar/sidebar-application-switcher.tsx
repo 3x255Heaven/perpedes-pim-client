@@ -8,13 +8,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/shared/dropdown-menu";
+} from "@/shared/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/shared/sidebar";
+} from "@/shared/sidebar";
 
 export function SidebarApplicationSwitcher({
   applications,

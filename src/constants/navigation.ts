@@ -5,13 +5,12 @@ import {
   PackageSearch,
   ChartColumn,
   ChartNoAxesCombined,
-  CircleUser,
 } from "lucide-react";
 
 export const platformNavigationItems = [
   {
     title: "Products",
-    url: "#",
+    url: "/",
     icon: PackageSearch,
     isActive: true,
     items: [
@@ -27,42 +26,42 @@ export const platformNavigationItems = [
   },
   {
     title: "Orders",
-    url: "#",
+    url: "/",
     icon: ClipboardList,
     items: [
       {
         title: "View All Orders",
-        url: "#",
+        url: "/orders",
       },
       {
         title: "Create New Order",
-        url: "#",
+        url: "/create-order",
       },
     ],
   },
   {
     title: "Customers",
-    url: "#",
+    url: "/",
     icon: ShoppingCart,
     items: [
       {
         title: "View All Customers",
-        url: "#",
+        url: "/customers",
       },
     ],
   },
   {
     title: "Employees",
-    url: "#",
+    url: "/",
     icon: PersonStanding,
     items: [
       {
         title: "View All Employees",
-        url: "#",
+        url: "/employees",
       },
       {
         title: "Add New Employee",
-        url: "#",
+        url: "/add-employee",
       },
     ],
   },
@@ -71,55 +70,32 @@ export const platformNavigationItems = [
 export const analyticsNavigationItems = [
   {
     title: "Dashboard",
-    url: "#",
+    url: "/",
     icon: ChartColumn,
     isActive: true,
     items: [
       {
         title: "Sales Overview",
-        url: "#",
+        url: "/analytics-sales",
       },
       {
         title: "Customer Overview",
-        url: "#",
-      },
-      {
-        title: "Stock & Inventory Insights",
-        url: "#",
+        url: "/analytics-customers",
       },
     ],
   },
   {
     title: "Sales Reports",
-    url: "#",
+    url: "/",
     icon: ChartNoAxesCombined,
     items: [
       {
         title: "Top-Performing Products",
-        url: "#",
+        url: "/analytics-performing-products",
       },
       {
         title: "Underperforming Products",
-        url: "#",
-      },
-    ],
-  },
-  {
-    title: "Customer Insights",
-    url: "#",
-    icon: CircleUser,
-    items: [
-      {
-        title: "Customer Demographics",
-        url: "#",
-      },
-      {
-        title: "Loyalty & Retention",
-        url: "#",
-      },
-      {
-        title: "Feedback & Reviews",
-        url: "#",
+        url: "/analytics-underperforming-products",
       },
     ],
   },

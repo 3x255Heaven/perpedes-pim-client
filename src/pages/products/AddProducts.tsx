@@ -1,7 +1,7 @@
 import { ImportHistory } from "@/pages/products/partials/ImportHistory";
 import data from "@/mocks/data.json";
 import { UploadIcon } from "lucide-react";
-import { Button } from "@/components/shared/button";
+import { Button } from "@/shared/button";
 
 export const AddProducts = () => {
   return (
