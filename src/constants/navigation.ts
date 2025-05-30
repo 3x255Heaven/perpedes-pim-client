@@ -17,11 +17,11 @@ export const platformNavigationItems = [
     items: [
       {
         title: "View All Products",
-        url: "#",
+        url: "/products",
       },
       {
         title: "Add New Product",
-        url: "#",
+        url: "/add-product",
       },
     ],
   },

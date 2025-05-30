@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 
 import { SidebarNavigation } from "@/components/Sidebar/sidebar-navigation";
@@ -13,7 +11,7 @@ import {
   SidebarRail,
 } from "@/components/shared/sidebar";
 
-import { user } from "@/constants/mock";
+import { user } from "@/mocks/mock";
 import {
   analyticsNavigationItems,
   platformNavigationItems,
