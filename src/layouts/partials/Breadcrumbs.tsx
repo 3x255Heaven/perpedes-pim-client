@@ -22,7 +22,7 @@ export const Breadcrumbs = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator className="hidden md:block" />
         <BreadcrumbItem>
-          <BreadcrumbPage>
+          <BreadcrumbPage className="font-bold uppercase">
             {breadcrumbs[location.pathname as keyof typeof breadcrumbs].label}
           </BreadcrumbPage>
         </BreadcrumbItem>

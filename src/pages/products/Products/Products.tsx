@@ -1,14 +1,21 @@
+import { useEffect, useState } from "react";
+import { ProductsTable } from "@/pages/products/Products/partials/ProductsTable";
+import { Spinner } from "@/shared/spinner";
+
+import productsMock from "@/mocks/productsMock.json";
+
 export const Products = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
   return (
-    <div>
-      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div className="aspect-video rounded-xl bg-muted/50" />
-          <div className="aspect-video rounded-xl bg-muted/50" />
-          <div className="aspect-video rounded-xl bg-muted/50" />
-        </div>
-        <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-      </div>
+    <div className="w-full h-[92vh] p-16 flex flex-col justify-center items-center gap-8">
+      {isLoading ? <Spinner /> : <ProductsTable data={productsMock} />}
     </div>
   );
 };

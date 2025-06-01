@@ -1,5 +1,3 @@
-import { format } from "date-fns";
-
 import {
   ColumnDef,
   flexRender,
@@ -18,13 +16,10 @@ import {
 } from "@/shared/table";
 
 import {
-  BanIcon,
-  CheckCircle2Icon,
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
-  LoaderIcon,
 } from "lucide-react";
 
 import {
@@ -36,91 +31,122 @@ import {
 } from "@/shared/select";
 
 import { Button } from "@/shared/button";
-import { Badge } from "@/shared/badge";
-import { Spinner } from "@/shared/spinner";
+import { Input } from "@/shared/input";
 
-export type Log = {
+export type Product = {
   id: number;
-  fileName: string;
-  fileSize: number;
-  totalRecords: number;
-  processedRecords: number;
-  failedRecords: number;
-  status: string;
-  createdBy: string;
-  startTime: string;
-  endTime: string;
+  name: string;
+  description: string;
+  hmvNumber: string;
+  modelId: string;
+  factory: string;
+  color: string;
+  picture: string;
+  widthSystem: string;
+  shoeType: string;
+  closureSystem: string;
+  upperMaterial: string;
+  innerLining: string;
+  soleType: string;
+  soleColor: string;
+  function: string;
+  smf: string;
+  //   variations: [
+  //     {
+  //       id: number;
+  //       size: string;
+  //       width: string;
+  //       productId: number;
+  //       stocks: [
+  //         {
+  //           id: number;
+  //           stockQuantity: number;
+  //           blockedStockQuantity: number;
+  //           batch: string;
+  //           stockId: string;
+  //         }
+  //       ];
+  //       prices: [
+  //         {
+  //           id: number;
+  //           price: number;
+  //           priceList: string;
+  //           currency: string;
+  //           unit: string;
+  //         }
+  //       ];
+  //     }
+  //   ];
 };
 
-export const columns: ColumnDef<Log>[] = [
+export const columns: ColumnDef<Product>[] = [
   {
-    accessorKey: "fileName",
-    header: "File Name",
+    accessorKey: "name",
+    header: "Name",
   },
   {
-    accessorKey: "fileSize",
-    header: "File Size",
+    accessorKey: "description",
+    header: "Description",
   },
   {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <Badge
-        variant="outline"
-        className="flex gap-1 px-1.5 text-muted-foreground [&_svg]:size-3"
-      >
-        {row.original.status === "Done" && (
-          <CheckCircle2Icon className="text-green-500 dark:text-green-400" />
-        )}
-        {row.original.status === "Pending" && <LoaderIcon />}
-        {row.original.status === "Failed" && (
-          <BanIcon className="text-red-500 dark:text-red-400" />
-        )}
-        {row.original.status}
-      </Badge>
-    ),
+    accessorKey: "hmvNumber",
+    header: "HVM Number",
   },
   {
-    accessorKey: "totalRecords",
-    header: "Total Records",
+    accessorKey: "modelId",
+    header: "Model ID",
   },
   {
-    accessorKey: "processedRecords",
-    header: "Processed Records",
+    accessorKey: "factory",
+    header: "Factory",
   },
   {
-    accessorKey: "failedRecords",
-    header: "Failed Records",
+    accessorKey: "color",
+    header: "Color",
   },
   {
-    accessorKey: "createdBy",
-    header: "Created By",
+    accessorKey: "picture",
+    header: "Picture",
   },
   {
-    accessorKey: "startTime",
-    header: "Start Time",
-    cell: ({ getValue }) => {
-      const rawDate = getValue() as string;
-      return format(new Date(rawDate), "MMM dd, yyyy hh:mm:ss a");
-    },
+    accessorKey: "widthSystem",
+    header: "Width System",
   },
   {
-    accessorKey: "endTime",
-    header: "End Time",
-    cell: ({ getValue }) => {
-      const rawDate = getValue() as string;
-      return format(new Date(rawDate), "MMM dd, yyyy hh:mm:ss a");
-    },
+    accessorKey: "shoeType",
+    header: "Shoe Type",
+  },
+  {
+    accessorKey: "closureSystem",
+    header: "Closure System",
+  },
+  {
+    accessorKey: "upperMaterial",
+    header: "Upper Material",
+  },
+  {
+    accessorKey: "innerLining",
+    header: "Inner Lining",
+  },
+  {
+    accessorKey: "soleType",
+    header: "Sole Type",
+  },
+  {
+    accessorKey: "soleColor",
+    header: "Sole Color",
+  },
+  {
+    accessorKey: "function",
+    header: "Function",
+  },
+  {
+    accessorKey: "smf",
+    header: "SMF",
   },
 ];
 
-export const ImportHistoryTable = ({
-  data,
-  isLoading,
-}: {
-  data: Log[];
-  isLoading: boolean;
-}) => {
+export const ProductsTable = ({ data }: { data: Product[] }) => {
   const table = useReactTable({
     data,
     columns,
@@ -130,6 +156,14 @@ export const ImportHistoryTable = ({
 
   return (
     <>
+      <Input
+        placeholder="Search"
+        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+        onChange={(event) =>
+          table.getColumn("name")?.setFilterValue(event.target.value)
+        }
+        className="max-w-sm"
+      />
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -151,44 +185,32 @@ export const ImportHistoryTable = ({
             ))}
           </TableHeader>
           <TableBody>
-            {isLoading ? (
-              <TableRow className="h-[24.5rem]">
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className="h-[3rem]"
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
                 <TableCell
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  <Spinner />
+                  No results.
                 </TableCell>
               </TableRow>
-            ) : (
-              <>
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
-                    >
-                      No results.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </>
             )}
           </TableBody>
         </Table>

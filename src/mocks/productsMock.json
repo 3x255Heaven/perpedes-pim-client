@@ -1,0 +1,902 @@
+[
+  {
+    "id": 9007199254741000,
+    "name": "Product 1",
+    "description": "Description for Product 1",
+    "hmvNumber": "HMV001",
+    "modelId": "MOD001",
+    "factory": "Factory A",
+    "color": "Black",
+    "picture": "product_1.jpg",
+    "widthSystem": "EU",
+    "shoeType": "Running",
+    "closureSystem": "Laces",
+    "upperMaterial": "Mesh",
+    "innerLining": "Textile",
+    "soleType": "Rubber",
+    "soleColor": "Black",
+    "function": "Cushioning",
+    "smf": "Sport",
+    "variations": [
+      {
+        "id": 9007199254742000,
+        "size": "38",
+        "width": "Narrow",
+        "productId": 9007199254741000,
+        "stocks": [
+          {
+            "id": 9007199254743000,
+            "stockQuantity": 100,
+            "blockedStockQuantity": 5,
+            "batch": "BATCH001",
+            "stockId": "STK001"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744000,
+            "price": 49.99,
+            "priceList": "Retail",
+            "currency": "EUR",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741001,
+    "name": "Product 2",
+    "description": "Description for Product 2",
+    "hmvNumber": "HMV002",
+    "modelId": "MOD002",
+    "factory": "Factory B",
+    "color": "White",
+    "picture": "product_2.jpg",
+    "widthSystem": "US",
+    "shoeType": "Hiking",
+    "closureSystem": "Hooks",
+    "upperMaterial": "Leather",
+    "innerLining": "Leather",
+    "soleType": "Vibram",
+    "soleColor": "White",
+    "function": "Grip",
+    "smf": "Outdoor",
+    "variations": [
+      {
+        "id": 9007199254742001,
+        "size": "39",
+        "width": "Regular",
+        "productId": 9007199254741001,
+        "stocks": [
+          {
+            "id": 9007199254743001,
+            "stockQuantity": 102,
+            "blockedStockQuantity": 6,
+            "batch": "BATCH002",
+            "stockId": "STK002"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744001,
+            "price": 52.99,
+            "priceList": "Retail",
+            "currency": "USD",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741002,
+    "name": "Product 3",
+    "description": "Description for Product 3",
+    "hmvNumber": "HMV003",
+    "modelId": "MOD003",
+    "factory": "Factory C",
+    "color": "Blue",
+    "picture": "product_3.jpg",
+    "widthSystem": "UK",
+    "shoeType": "Casual",
+    "closureSystem": "Slip-on",
+    "upperMaterial": "Canvas",
+    "innerLining": "Gore-Tex",
+    "soleType": "EVA",
+    "soleColor": "Grey",
+    "function": "Breathable",
+    "smf": "Lifestyle",
+    "variations": [
+      {
+        "id": 9007199254742002,
+        "size": "40",
+        "width": "Wide",
+        "productId": 9007199254741002,
+        "stocks": [
+          {
+            "id": 9007199254743002,
+            "stockQuantity": 104,
+            "blockedStockQuantity": 7,
+            "batch": "BATCH003",
+            "stockId": "STK003"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744002,
+            "price": 55.99,
+            "priceList": "Retail",
+            "currency": "GBP",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741003,
+    "name": "Product 4",
+    "description": "Description for Product 4",
+    "hmvNumber": "HMV004",
+    "modelId": "MOD004",
+    "factory": "Factory D",
+    "color": "Red",
+    "picture": "product_4.jpg",
+    "widthSystem": "EU",
+    "shoeType": "Formal",
+    "closureSystem": "Velcro",
+    "upperMaterial": "Synthetic",
+    "innerLining": "Cotton",
+    "soleType": "Leather",
+    "soleColor": "Brown",
+    "function": "Style",
+    "smf": "Business",
+    "variations": [
+      {
+        "id": 9007199254742003,
+        "size": "41",
+        "width": "Narrow",
+        "productId": 9007199254741003,
+        "stocks": [
+          {
+            "id": 9007199254743003,
+            "stockQuantity": 106,
+            "blockedStockQuantity": 5,
+            "batch": "BATCH004",
+            "stockId": "STK004"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744003,
+            "price": 58.99,
+            "priceList": "Retail",
+            "currency": "EUR",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741004,
+    "name": "Product 5",
+    "description": "Description for Product 5",
+    "hmvNumber": "HMV005",
+    "modelId": "MOD005",
+    "factory": "Factory E",
+    "color": "Green",
+    "picture": "product_5.jpg",
+    "widthSystem": "US",
+    "shoeType": "Training",
+    "closureSystem": "Laces",
+    "upperMaterial": "Mesh",
+    "innerLining": "Textile",
+    "soleType": "Rubber",
+    "soleColor": "Black",
+    "function": "Cushioning",
+    "smf": "Sport",
+    "variations": [
+      {
+        "id": 9007199254742004,
+        "size": "42",
+        "width": "Regular",
+        "productId": 9007199254741004,
+        "stocks": [
+          {
+            "id": 9007199254743004,
+            "stockQuantity": 108,
+            "blockedStockQuantity": 6,
+            "batch": "BATCH005",
+            "stockId": "STK005"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744004,
+            "price": 61.99,
+            "priceList": "Retail",
+            "currency": "USD",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741005,
+    "name": "Product 6",
+    "description": "Description for Product 6",
+    "hmvNumber": "HMV006",
+    "modelId": "MOD006",
+    "factory": "Factory A",
+    "color": "Black",
+    "picture": "product_6.jpg",
+    "widthSystem": "UK",
+    "shoeType": "Running",
+    "closureSystem": "Hooks",
+    "upperMaterial": "Leather",
+    "innerLining": "Leather",
+    "soleType": "Vibram",
+    "soleColor": "White",
+    "function": "Grip",
+    "smf": "Outdoor",
+    "variations": [
+      {
+        "id": 9007199254742005,
+        "size": "43",
+        "width": "Wide",
+        "productId": 9007199254741005,
+        "stocks": [
+          {
+            "id": 9007199254743005,
+            "stockQuantity": 110,
+            "blockedStockQuantity": 7,
+            "batch": "BATCH006",
+            "stockId": "STK006"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744005,
+            "price": 64.99,
+            "priceList": "Retail",
+            "currency": "GBP",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741006,
+    "name": "Product 7",
+    "description": "Description for Product 7",
+    "hmvNumber": "HMV007",
+    "modelId": "MOD007",
+    "factory": "Factory B",
+    "color": "White",
+    "picture": "product_7.jpg",
+    "widthSystem": "EU",
+    "shoeType": "Hiking",
+    "closureSystem": "Slip-on",
+    "upperMaterial": "Canvas",
+    "innerLining": "Gore-Tex",
+    "soleType": "EVA",
+    "soleColor": "Grey",
+    "function": "Breathable",
+    "smf": "Lifestyle",
+    "variations": [
+      {
+        "id": 9007199254742006,
+        "size": "44",
+        "width": "Narrow",
+        "productId": 9007199254741006,
+        "stocks": [
+          {
+            "id": 9007199254743006,
+            "stockQuantity": 112,
+            "blockedStockQuantity": 5,
+            "batch": "BATCH007",
+            "stockId": "STK007"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744006,
+            "price": 67.99,
+            "priceList": "Retail",
+            "currency": "EUR",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741007,
+    "name": "Product 8",
+    "description": "Description for Product 8",
+    "hmvNumber": "HMV008",
+    "modelId": "MOD008",
+    "factory": "Factory C",
+    "color": "Blue",
+    "picture": "product_8.jpg",
+    "widthSystem": "US",
+    "shoeType": "Casual",
+    "closureSystem": "Velcro",
+    "upperMaterial": "Synthetic",
+    "innerLining": "Cotton",
+    "soleType": "Leather",
+    "soleColor": "Brown",
+    "function": "Style",
+    "smf": "Business",
+    "variations": [
+      {
+        "id": 9007199254742007,
+        "size": "45",
+        "width": "Regular",
+        "productId": 9007199254741007,
+        "stocks": [
+          {
+            "id": 9007199254743007,
+            "stockQuantity": 114,
+            "blockedStockQuantity": 6,
+            "batch": "BATCH008",
+            "stockId": "STK008"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744007,
+            "price": 70.99,
+            "priceList": "Retail",
+            "currency": "USD",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741008,
+    "name": "Product 9",
+    "description": "Description for Product 9",
+    "hmvNumber": "HMV009",
+    "modelId": "MOD009",
+    "factory": "Factory D",
+    "color": "Red",
+    "picture": "product_9.jpg",
+    "widthSystem": "UK",
+    "shoeType": "Formal",
+    "closureSystem": "Laces",
+    "upperMaterial": "Mesh",
+    "innerLining": "Textile",
+    "soleType": "Rubber",
+    "soleColor": "Black",
+    "function": "Cushioning",
+    "smf": "Sport",
+    "variations": [
+      {
+        "id": 9007199254742008,
+        "size": "46",
+        "width": "Wide",
+        "productId": 9007199254741008,
+        "stocks": [
+          {
+            "id": 9007199254743008,
+            "stockQuantity": 116,
+            "blockedStockQuantity": 7,
+            "batch": "BATCH009",
+            "stockId": "STK009"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744008,
+            "price": 73.99,
+            "priceList": "Retail",
+            "currency": "GBP",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741009,
+    "name": "Product 10",
+    "description": "Description for Product 10",
+    "hmvNumber": "HMV010",
+    "modelId": "MOD010",
+    "factory": "Factory E",
+    "color": "Green",
+    "picture": "product_10.jpg",
+    "widthSystem": "EU",
+    "shoeType": "Training",
+    "closureSystem": "Hooks",
+    "upperMaterial": "Leather",
+    "innerLining": "Leather",
+    "soleType": "Vibram",
+    "soleColor": "White",
+    "function": "Grip",
+    "smf": "Outdoor",
+    "variations": [
+      {
+        "id": 9007199254742009,
+        "size": "47",
+        "width": "Narrow",
+        "productId": 9007199254741009,
+        "stocks": [
+          {
+            "id": 9007199254743009,
+            "stockQuantity": 118,
+            "blockedStockQuantity": 5,
+            "batch": "BATCH010",
+            "stockId": "STK010"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744009,
+            "price": 76.99,
+            "priceList": "Retail",
+            "currency": "EUR",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741010,
+    "name": "Product 11",
+    "description": "Description for Product 11",
+    "hmvNumber": "HMV011",
+    "modelId": "MOD011",
+    "factory": "Factory A",
+    "color": "Black",
+    "picture": "product_11.jpg",
+    "widthSystem": "US",
+    "shoeType": "Running",
+    "closureSystem": "Slip-on",
+    "upperMaterial": "Canvas",
+    "innerLining": "Gore-Tex",
+    "soleType": "EVA",
+    "soleColor": "Grey",
+    "function": "Breathable",
+    "smf": "Lifestyle",
+    "variations": [
+      {
+        "id": 9007199254742010,
+        "size": "38",
+        "width": "Regular",
+        "productId": 9007199254741010,
+        "stocks": [
+          {
+            "id": 9007199254743010,
+            "stockQuantity": 120,
+            "blockedStockQuantity": 6,
+            "batch": "BATCH011",
+            "stockId": "STK011"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744010,
+            "price": 79.99,
+            "priceList": "Retail",
+            "currency": "USD",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741011,
+    "name": "Product 12",
+    "description": "Description for Product 12",
+    "hmvNumber": "HMV012",
+    "modelId": "MOD012",
+    "factory": "Factory B",
+    "color": "White",
+    "picture": "product_12.jpg",
+    "widthSystem": "UK",
+    "shoeType": "Hiking",
+    "closureSystem": "Velcro",
+    "upperMaterial": "Synthetic",
+    "innerLining": "Cotton",
+    "soleType": "Leather",
+    "soleColor": "Brown",
+    "function": "Style",
+    "smf": "Business",
+    "variations": [
+      {
+        "id": 9007199254742011,
+        "size": "39",
+        "width": "Wide",
+        "productId": 9007199254741011,
+        "stocks": [
+          {
+            "id": 9007199254743011,
+            "stockQuantity": 122,
+            "blockedStockQuantity": 7,
+            "batch": "BATCH012",
+            "stockId": "STK012"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744011,
+            "price": 82.99,
+            "priceList": "Retail",
+            "currency": "GBP",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741012,
+    "name": "Product 13",
+    "description": "Description for Product 13",
+    "hmvNumber": "HMV013",
+    "modelId": "MOD013",
+    "factory": "Factory C",
+    "color": "Blue",
+    "picture": "product_13.jpg",
+    "widthSystem": "EU",
+    "shoeType": "Casual",
+    "closureSystem": "Laces",
+    "upperMaterial": "Mesh",
+    "innerLining": "Textile",
+    "soleType": "Rubber",
+    "soleColor": "Black",
+    "function": "Cushioning",
+    "smf": "Sport",
+    "variations": [
+      {
+        "id": 9007199254742012,
+        "size": "40",
+        "width": "Narrow",
+        "productId": 9007199254741012,
+        "stocks": [
+          {
+            "id": 9007199254743012,
+            "stockQuantity": 124,
+            "blockedStockQuantity": 5,
+            "batch": "BATCH013",
+            "stockId": "STK013"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744012,
+            "price": 85.99,
+            "priceList": "Retail",
+            "currency": "EUR",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741013,
+    "name": "Product 14",
+    "description": "Description for Product 14",
+    "hmvNumber": "HMV014",
+    "modelId": "MOD014",
+    "factory": "Factory D",
+    "color": "Red",
+    "picture": "product_14.jpg",
+    "widthSystem": "US",
+    "shoeType": "Formal",
+    "closureSystem": "Hooks",
+    "upperMaterial": "Leather",
+    "innerLining": "Leather",
+    "soleType": "Vibram",
+    "soleColor": "White",
+    "function": "Grip",
+    "smf": "Outdoor",
+    "variations": [
+      {
+        "id": 9007199254742013,
+        "size": "41",
+        "width": "Regular",
+        "productId": 9007199254741013,
+        "stocks": [
+          {
+            "id": 9007199254743013,
+            "stockQuantity": 126,
+            "blockedStockQuantity": 6,
+            "batch": "BATCH014",
+            "stockId": "STK014"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744013,
+            "price": 88.99,
+            "priceList": "Retail",
+            "currency": "USD",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741014,
+    "name": "Product 15",
+    "description": "Description for Product 15",
+    "hmvNumber": "HMV015",
+    "modelId": "MOD015",
+    "factory": "Factory E",
+    "color": "Green",
+    "picture": "product_15.jpg",
+    "widthSystem": "UK",
+    "shoeType": "Training",
+    "closureSystem": "Slip-on",
+    "upperMaterial": "Canvas",
+    "innerLining": "Gore-Tex",
+    "soleType": "EVA",
+    "soleColor": "Grey",
+    "function": "Breathable",
+    "smf": "Lifestyle",
+    "variations": [
+      {
+        "id": 9007199254742014,
+        "size": "42",
+        "width": "Wide",
+        "productId": 9007199254741014,
+        "stocks": [
+          {
+            "id": 9007199254743014,
+            "stockQuantity": 128,
+            "blockedStockQuantity": 7,
+            "batch": "BATCH015",
+            "stockId": "STK015"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744014,
+            "price": 91.99,
+            "priceList": "Retail",
+            "currency": "GBP",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741015,
+    "name": "Product 16",
+    "description": "Description for Product 16",
+    "hmvNumber": "HMV016",
+    "modelId": "MOD016",
+    "factory": "Factory A",
+    "color": "Black",
+    "picture": "product_16.jpg",
+    "widthSystem": "EU",
+    "shoeType": "Running",
+    "closureSystem": "Velcro",
+    "upperMaterial": "Synthetic",
+    "innerLining": "Cotton",
+    "soleType": "Leather",
+    "soleColor": "Brown",
+    "function": "Style",
+    "smf": "Business",
+    "variations": [
+      {
+        "id": 9007199254742015,
+        "size": "43",
+        "width": "Narrow",
+        "productId": 9007199254741015,
+        "stocks": [
+          {
+            "id": 9007199254743015,
+            "stockQuantity": 130,
+            "blockedStockQuantity": 5,
+            "batch": "BATCH016",
+            "stockId": "STK016"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744015,
+            "price": 94.99,
+            "priceList": "Retail",
+            "currency": "EUR",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741016,
+    "name": "Product 17",
+    "description": "Description for Product 17",
+    "hmvNumber": "HMV017",
+    "modelId": "MOD017",
+    "factory": "Factory B",
+    "color": "White",
+    "picture": "product_17.jpg",
+    "widthSystem": "US",
+    "shoeType": "Hiking",
+    "closureSystem": "Laces",
+    "upperMaterial": "Mesh",
+    "innerLining": "Textile",
+    "soleType": "Rubber",
+    "soleColor": "Black",
+    "function": "Cushioning",
+    "smf": "Sport",
+    "variations": [
+      {
+        "id": 9007199254742016,
+        "size": "44",
+        "width": "Regular",
+        "productId": 9007199254741016,
+        "stocks": [
+          {
+            "id": 9007199254743016,
+            "stockQuantity": 132,
+            "blockedStockQuantity": 6,
+            "batch": "BATCH017",
+            "stockId": "STK017"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744016,
+            "price": 97.99,
+            "priceList": "Retail",
+            "currency": "USD",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741017,
+    "name": "Product 18",
+    "description": "Description for Product 18",
+    "hmvNumber": "HMV018",
+    "modelId": "MOD018",
+    "factory": "Factory C",
+    "color": "Blue",
+    "picture": "product_18.jpg",
+    "widthSystem": "UK",
+    "shoeType": "Casual",
+    "closureSystem": "Hooks",
+    "upperMaterial": "Leather",
+    "innerLining": "Leather",
+    "soleType": "Vibram",
+    "soleColor": "White",
+    "function": "Grip",
+    "smf": "Outdoor",
+    "variations": [
+      {
+        "id": 9007199254742017,
+        "size": "45",
+        "width": "Wide",
+        "productId": 9007199254741017,
+        "stocks": [
+          {
+            "id": 9007199254743017,
+            "stockQuantity": 134,
+            "blockedStockQuantity": 7,
+            "batch": "BATCH018",
+            "stockId": "STK018"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744017,
+            "price": 100.99,
+            "priceList": "Retail",
+            "currency": "GBP",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741018,
+    "name": "Product 19",
+    "description": "Description for Product 19",
+    "hmvNumber": "HMV019",
+    "modelId": "MOD019",
+    "factory": "Factory D",
+    "color": "Red",
+    "picture": "product_19.jpg",
+    "widthSystem": "EU",
+    "shoeType": "Formal",
+    "closureSystem": "Slip-on",
+    "upperMaterial": "Canvas",
+    "innerLining": "Gore-Tex",
+    "soleType": "EVA",
+    "soleColor": "Grey",
+    "function": "Breathable",
+    "smf": "Lifestyle",
+    "variations": [
+      {
+        "id": 9007199254742018,
+        "size": "46",
+        "width": "Narrow",
+        "productId": 9007199254741018,
+        "stocks": [
+          {
+            "id": 9007199254743018,
+            "stockQuantity": 136,
+            "blockedStockQuantity": 5,
+            "batch": "BATCH019",
+            "stockId": "STK019"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744018,
+            "price": 103.99,
+            "priceList": "Retail",
+            "currency": "EUR",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9007199254741019,
+    "name": "Product 20",
+    "description": "Description for Product 20",
+    "hmvNumber": "HMV020",
+    "modelId": "MOD020",
+    "factory": "Factory E",
+    "color": "Green",
+    "picture": "product_20.jpg",
+    "widthSystem": "US",
+    "shoeType": "Training",
+    "closureSystem": "Velcro",
+    "upperMaterial": "Synthetic",
+    "innerLining": "Cotton",
+    "soleType": "Leather",
+    "soleColor": "Brown",
+    "function": "Style",
+    "smf": "Business",
+    "variations": [
+      {
+        "id": 9007199254742019,
+        "size": "47",
+        "width": "Regular",
+        "productId": 9007199254741019,
+        "stocks": [
+          {
+            "id": 9007199254743019,
+            "stockQuantity": 138,
+            "blockedStockQuantity": 6,
+            "batch": "BATCH020",
+            "stockId": "STK020"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744019,
+            "price": 106.99,
+            "priceList": "Retail",
+            "currency": "USD",
+            "unit": "Pair"
+          }
+        ]
+      }
+    ]
+  }
+]
