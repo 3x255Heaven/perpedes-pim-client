@@ -17,13 +17,17 @@ export const Breadcrumbs = () => {
       <BreadcrumbList>
         <BreadcrumbItem className="hidden md:block">
           <BreadcrumbLink href="#">
-            {breadcrumbs[location.pathname as keyof typeof breadcrumbs].base}
+            {breadcrumbs[location.pathname as keyof typeof breadcrumbs]
+              ? breadcrumbs[location.pathname as keyof typeof breadcrumbs].base
+              : "Products"}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator className="hidden md:block" />
         <BreadcrumbItem>
           <BreadcrumbPage className="font-bold uppercase">
-            {breadcrumbs[location.pathname as keyof typeof breadcrumbs].label}
+            {breadcrumbs[location.pathname as keyof typeof breadcrumbs]
+              ? breadcrumbs[location.pathname as keyof typeof breadcrumbs].label
+              : "Product Details"}
           </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>

@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import {
   ColumnDef,
   flexRender,
@@ -147,6 +149,7 @@ export const columns: ColumnDef<Product>[] = [
 ];
 
 export const ProductsTable = ({ data }: { data: Product[] }) => {
+  const navigate = useNavigate();
   const table = useReactTable({
     data,
     columns,
@@ -189,8 +192,10 @@ export const ProductsTable = ({ data }: { data: Product[] }) => {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className="h-[3rem]"
+                  className="h-[3rem] cursor-pointer"
+                  onClick={() => {
+                    navigate(`/products/${row.original.id}`);
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

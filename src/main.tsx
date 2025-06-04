@@ -25,10 +25,10 @@ const router = createBrowserRouter([
     element: <ApplicationLayout />,
     errorElement: <NotFound />,
     children: [
-      { index: true, element: <ManageProducts /> },
+      { index: true, element: <Products /> },
       { path: "add-product", element: <ManageProducts /> },
+      { path: "products/:id", element: <Product /> },
       { path: "products", element: <Products /> },
-      { path: "product", element: <Product /> },
       { path: "orders", element: <Orders /> },
       { path: "create-order", element: <CreateOrders /> },
       { path: "customers", element: <Customers /> },

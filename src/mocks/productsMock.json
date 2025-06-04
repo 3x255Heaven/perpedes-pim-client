@@ -120,6 +120,82 @@
             "blockedStockQuantity": 7,
             "batch": "BATCH003",
             "stockId": "STK003"
+          },
+          {
+            "id": 9007199254743002,
+            "stockQuantity": 104,
+            "blockedStockQuantity": 7,
+            "batch": "BATCH003",
+            "stockId": "STK003"
+          },
+          {
+            "id": 9007199254743002,
+            "stockQuantity": 104,
+            "blockedStockQuantity": 7,
+            "batch": "BATCH003",
+            "stockId": "STK003"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744002,
+            "price": 55.99,
+            "priceList": "Retail",
+            "currency": "GBP",
+            "unit": "Pair"
+          },
+          {
+            "id": 9007199254744002,
+            "price": 55.99,
+            "priceList": "Retail",
+            "currency": "GBP",
+            "unit": "Pair"
+          },
+          {
+            "id": 9007199254744002,
+            "price": 55.99,
+            "priceList": "Retail",
+            "currency": "GBP",
+            "unit": "Pair"
+          }
+        ]
+      },
+      {
+        "id": 9007199254742002,
+        "size": "41",
+        "width": "Wide",
+        "productId": 9007199254741002,
+        "stocks": [
+          {
+            "id": 9007199254743002,
+            "stockQuantity": 104,
+            "blockedStockQuantity": 7,
+            "batch": "BATCH003",
+            "stockId": "STK003"
+          }
+        ],
+        "prices": [
+          {
+            "id": 9007199254744002,
+            "price": 55.99,
+            "priceList": "Retail",
+            "currency": "GBP",
+            "unit": "Pair"
+          }
+        ]
+      },
+      {
+        "id": 9007199254742002,
+        "size": "43",
+        "width": "Wide",
+        "productId": 9007199254741002,
+        "stocks": [
+          {
+            "id": 9007199254743002,
+            "stockQuantity": 104,
+            "blockedStockQuantity": 7,
+            "batch": "BATCH003",
+            "stockId": "STK003"
           }
         ],
         "prices": [
