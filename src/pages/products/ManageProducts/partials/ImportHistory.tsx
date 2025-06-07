@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
+// ImportHistory.tsx
+import { useState } from "react";
 import { RefreshCcw } from "lucide-react";
-import { ImportHistoryTable, Log } from "./ImportHistoryTable";
+import { ImportHistoryTable } from "./ImportHistoryTable";
+import { useLogsQuery } from "@/hooks/useLogs";
 
-export const ImportHistory = ({ data }: { data: Log[] }) => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+export const ImportHistory = () => {
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(10);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+  const logsQuery = useLogsQuery(pageIndex, pageSize);
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -17,16 +16,30 @@ export const ImportHistory = ({ data }: { data: Log[] }) => {
         <span className="font-bold text-3xl mb-4">Import History</span>
         <RefreshCcw
           className="cursor-pointer"
-          onClick={() => {
-            setIsLoading(true);
-
-            setTimeout(() => {
-              setIsLoading(false);
-            }, 2000);
-          }}
+          onClick={() => logsQuery.refetch()}
         />
       </div>
-      <ImportHistoryTable data={data} isLoading={isLoading} />
+      {logsQuery.isError ? (
+        <div className="min-h-[35vh] flex justify-center items-center text-center p-10 rounded-xl bg-muted/50">
+          <span className="text-2xl">
+            Something went wrong while trying to get Logs. Please try again
+            later!
+          </span>
+        </div>
+      ) : (
+        <ImportHistoryTable
+          data={logsQuery.data?.logs || []}
+          total={logsQuery.data?.totalElements || 0}
+          pageIndex={pageIndex}
+          pageSize={pageSize}
+          isLoading={logsQuery.isLoading}
+          onPageChange={setPageIndex}
+          onPageSizeChange={(size) => {
+            setPageSize(size);
+            setPageIndex(0);
+          }}
+        />
+      )}
     </div>
   );
 };

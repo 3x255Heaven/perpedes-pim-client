@@ -85,10 +85,20 @@ export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "name",
     header: "Name",
+    cell: ({ getValue }) => (
+      <div className="max-w-[150px] truncate" title={getValue() as string}>
+        {getValue() as string}
+      </div>
+    ),
   },
   {
     accessorKey: "description",
     header: "Description",
+    cell: ({ getValue }) => (
+      <div className="max-w-[200px] truncate" title={getValue() as string}>
+        {getValue() as string}
+      </div>
+    ),
   },
   {
     accessorKey: "hmvNumber",
@@ -148,11 +158,44 @@ export const columns: ColumnDef<Product>[] = [
   },
 ];
 
-export const ProductsTable = ({ data }: { data: Product[] }) => {
+export const ProductsTable = ({
+  data,
+  total,
+  pageIndex,
+  pageSize,
+  onPageChange,
+  onPageSizeChange,
+}: {
+  data: Product[];
+  total: number;
+  pageIndex: number;
+  pageSize: number;
+  onPageChange: (index: number) => void;
+  onPageSizeChange: (size: number) => void;
+}) => {
   const navigate = useNavigate();
   const table = useReactTable({
     data,
     columns,
+    manualPagination: true,
+    pageCount: Math.ceil(total / pageSize),
+    state: {
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
+    },
+    onPaginationChange: (updater) => {
+      const newPagination =
+        typeof updater === "function"
+          ? updater({ pageIndex, pageSize })
+          : updater;
+
+      onPageChange(newPagination.pageIndex);
+      if (newPagination.pageSize !== pageSize) {
+        onPageSizeChange(newPagination.pageSize);
+      }
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
@@ -236,7 +279,7 @@ export const ProductsTable = ({ data }: { data: Product[] }) => {
                 />
               </SelectTrigger>
               <SelectContent side="top">
-                {[10, 20, 30, 40, 50].map((pageSize) => (
+                {[5].map((pageSize) => (
                   <SelectItem key={pageSize} value={`${pageSize}`}>
                     {pageSize}
                   </SelectItem>

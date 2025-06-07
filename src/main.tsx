@@ -1,9 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { ThemeProvider } from "./components/Theme/ThemeProvider";
+import { ThemeProvider } from "@/components/Theme/ThemeProvider";
 import { ApplicationLayout } from "@/layouts/ApplicationLayout";
-import { NotFound } from "./components/NotFound/NotFound";
+import { NotFound } from "@/components/NotFound/NotFound";
 import { ManageProducts } from "@/pages/products/ManageProducts/ManageProducts";
 import { Products } from "@/pages/products/Products/Products";
 import { Product } from "@/pages/products/Product/Product";
@@ -18,6 +19,8 @@ import { PerformingProducts } from "@/pages/sales/PerformingProducts";
 import { UnderPerformingProducts } from "@/pages/sales/UnderperformingProducts";
 
 import "./index.css";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -50,8 +53,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ThemeProvider>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </QueryClientProvider>
   </StrictMode>
 );

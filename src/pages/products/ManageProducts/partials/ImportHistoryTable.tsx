@@ -60,6 +60,9 @@ export const columns: ColumnDef<Log>[] = [
   {
     accessorKey: "fileSize",
     header: "File Size",
+    cell: ({ getValue }) => {
+      return `${getValue()} bytes`;
+    },
   },
   {
     accessorKey: "status",
@@ -95,6 +98,10 @@ export const columns: ColumnDef<Log>[] = [
   {
     accessorKey: "createdBy",
     header: "Created By",
+    cell: ({ getValue }) => {
+      const value = getValue() as string;
+      return value.toUpperCase();
+    },
   },
   {
     accessorKey: "startTime",
@@ -116,14 +123,43 @@ export const columns: ColumnDef<Log>[] = [
 
 export const ImportHistoryTable = ({
   data,
+  total,
+  pageIndex,
+  pageSize,
   isLoading,
+  onPageChange,
+  onPageSizeChange,
 }: {
   data: Log[];
+  total: number;
+  pageIndex: number;
+  pageSize: number;
   isLoading: boolean;
+  onPageChange: (index: number) => void;
+  onPageSizeChange: (size: number) => void;
 }) => {
   const table = useReactTable({
     data,
     columns,
+    manualPagination: true,
+    pageCount: Math.ceil(total / pageSize),
+    state: {
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
+    },
+    onPaginationChange: (updater) => {
+      const newPagination =
+        typeof updater === "function"
+          ? updater({ pageIndex, pageSize })
+          : updater;
+
+      onPageChange(newPagination.pageIndex);
+      if (newPagination.pageSize !== pageSize) {
+        onPageSizeChange(newPagination.pageSize);
+      }
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
@@ -209,7 +245,7 @@ export const ImportHistoryTable = ({
                 />
               </SelectTrigger>
               <SelectContent side="top">
-                {[10, 20, 30, 40, 50].map((pageSize) => (
+                {[10].map((pageSize) => (
                   <SelectItem key={pageSize} value={`${pageSize}`}>
                     {pageSize}
                   </SelectItem>
