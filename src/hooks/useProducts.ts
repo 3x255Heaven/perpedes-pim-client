@@ -61,3 +61,41 @@ export function useUpdateProductMutation() {
     },
   });
 }
+
+export function useUploadProductImageMutation() {
+  return useMutation({
+    mutationFn: async ({
+      productId,
+      file,
+    }: {
+      productId: number;
+      file: File;
+    }) => {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await axiosInstance.post(
+        `/products/${productId}/image`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return response.data;
+    },
+  });
+}
+
+export function useDeleteProductImageMutation() {
+  return useMutation({
+    mutationFn: async (productId: string) => {
+      const response = await axiosInstance.delete(
+        `/products/${productId}/image`
+      );
+      return response.data;
+    },
+  });
+}

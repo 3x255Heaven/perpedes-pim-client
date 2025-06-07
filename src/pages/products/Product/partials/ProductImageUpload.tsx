@@ -1,7 +1,28 @@
+import { useUploadProductImageMutation } from "@/hooks/useProducts";
 import { Button } from "@/shared/button";
 import { UploadIcon } from "lucide-react";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
-export const ProductImageUpload = () => {
+export const ProductImageUpload = ({ refetchFn }: any) => {
+  const { id } = useParams();
+  const [file, setFile] = useState<File | null>(null);
+  const mutation = useUploadProductImageMutation();
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (file) {
+      await mutation.mutateAsync({ productId: Number(id), file });
+      await refetchFn();
+    }
+  };
+
   return (
     <div className="aspect-video rounded-xl bg-muted/50 p-4">
       <span className="font-bold text-2xl">Images</span>
@@ -21,10 +42,19 @@ export const ProductImageUpload = () => {
               Supported format: PNG, JPG, JPEG
             </p>
           </div>
-          <input id="dropzone-file" type="file" className="hidden" />
+          <input
+            id="dropzone-file"
+            type="file"
+            className="hidden"
+            onChange={handleFileChange}
+          />
         </label>
-        <Button className="bg-[#9bc79b] text-white mt-4 hover:bg-[#afe1af] transition-2 uppercase">
-          Upload
+        <Button
+          className="bg-[#9bc79b] text-white mt-4 hover:bg-[#afe1af] transition-2 uppercase"
+          onClick={handleUpload}
+          disabled={mutation.isPending || !file}
+        >
+          {mutation.isPending ? "Uploading..." : "Upload"}
         </Button>
       </div>
     </div>

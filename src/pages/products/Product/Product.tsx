@@ -1,12 +1,16 @@
 import { useParams } from "react-router-dom";
 import { Button } from "@/shared/button";
-import { useProductQuery, useUpdateProductMutation } from "@/hooks/useProducts";
+import {
+  useDeleteProductImageMutation,
+  useProductQuery,
+  useUpdateProductMutation,
+} from "@/hooks/useProducts";
 import { Variations } from "./partials/Variations";
 import { ProductFields } from "./partials/ProductFields";
 import { Spinner } from "@/shared/spinner";
 import { ProductImageUpload } from "./partials/ProductImageUpload";
-import { ProductImageCarousel } from "./partials/ProductImageCarousel";
 import { useRef } from "react";
+import { MinusCircle } from "lucide-react";
 
 export const Product = () => {
   const { id } = useParams();
@@ -14,6 +18,7 @@ export const Product = () => {
 
   const productQuery = useProductQuery(id as string);
   const updateProductMutation = useUpdateProductMutation();
+  const deleteImageMutation = useDeleteProductImageMutation();
 
   const handleSubmit = () => {
     if (formRef.current) {
@@ -52,6 +57,11 @@ export const Product = () => {
     }
   };
 
+  const handleDeleteImage = async () => {
+    await deleteImageMutation.mutateAsync(id as string);
+    productQuery.refetch();
+  };
+
   if (productQuery.isPending) {
     return (
       <div className="flex h-[92vh] flex-col justify-center items-center gap-4 p-4 pt-0">
@@ -64,9 +74,7 @@ export const Product = () => {
     <div className="flex flex-col gap-4 p-10 pt-0">
       <div className="flex flex-col">
         <div className="flex justify-between items-center">
-          <h1 className="text-4xl my-10">
-            {productQuery.data.name} Some Random Product Name
-          </h1>
+          <h1 className="text-4xl my-10">{productQuery.data.name}</h1>
 
           <div className="flex gap-4">
             <Button
@@ -79,16 +87,37 @@ export const Product = () => {
           </div>
         </div>
 
-        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div className="md:col-span-2">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="flex flex-col gap-4">
             <ProductFields product={productQuery.data} ref={formRef} />
+            <ProductImageUpload
+              refetchFn={() => {
+                productQuery.refetch();
+              }}
+            />
           </div>
-          <div className="md:col-span-1">
-            <ProductImageUpload />
+
+          <div className="relative w-full h-full border rounded flex items-center justify-center min-h-[300px]">
+            {productQuery.data.picture ? (
+              <>
+                <img
+                  src={productQuery.data.picture}
+                  alt="Product"
+                  className="w-full h-auto max-h-[300px] object-contain rounded"
+                />
+                <MinusCircle
+                  className="absolute top-2 right-2  rounded-full p-1 shadow cursor-pointer text-red-500"
+                  onClick={handleDeleteImage}
+                />
+              </>
+            ) : (
+              <p className="text-gray-500">
+                There is no image for this product.
+              </p>
+            )}
           </div>
         </div>
 
-        <ProductImageCarousel />
         <Variations variations={productQuery.data.variations} />
       </div>
     </div>
