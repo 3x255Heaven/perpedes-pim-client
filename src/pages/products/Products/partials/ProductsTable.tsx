@@ -33,7 +33,6 @@ import {
 } from "@/shared/select";
 
 import { Button } from "@/shared/button";
-import { Input } from "@/shared/input";
 
 export type Product = {
   id: number;
@@ -117,10 +116,6 @@ export const columns: ColumnDef<Product>[] = [
     header: "Color",
   },
   {
-    accessorKey: "picture",
-    header: "Picture",
-  },
-  {
     accessorKey: "widthSystem",
     header: "Width System",
   },
@@ -202,14 +197,6 @@ export const ProductsTable = ({
 
   return (
     <>
-      <Input
-        placeholder="Search"
-        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-        onChange={(event) =>
-          table.getColumn("name")?.setFilterValue(event.target.value)
-        }
-        className="max-w-sm"
-      />
       <div className="rounded-md border">
         <Table>
           <TableHeader>

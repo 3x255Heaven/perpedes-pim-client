@@ -99,3 +99,24 @@ export function useDeleteProductImageMutation() {
     },
   });
 }
+
+export const useProductSearchQuery = (
+  searchTerm: string,
+  pageIndex: number,
+  pageSize: number
+) => {
+  return useQuery({
+    queryKey: ["products-search", searchTerm, pageIndex, pageSize],
+    queryFn: async () => {
+      const response = await axiosInstance.get(`/products/search`, {
+        params: {
+          searchTerm,
+          page: pageIndex,
+          size: pageSize,
+        },
+      });
+      return response.data;
+    },
+    enabled: !!searchTerm,
+  });
+};
