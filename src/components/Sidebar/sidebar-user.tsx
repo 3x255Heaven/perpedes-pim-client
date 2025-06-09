@@ -1,6 +1,6 @@
 import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/avatar";
+import { Avatar, AvatarFallback } from "@/shared/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,17 +16,21 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/shared/sidebar";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export function SidebarUser({
   user,
 }: {
   user: {
-    name: string;
-    email: string;
-    avatar: string;
+    firstName: string;
+    lastName: string;
+    username: string;
   };
 }) {
   const { isMobile } = useSidebar();
+  const { logoutUser } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <SidebarMenu>
@@ -38,12 +42,19 @@ export function SidebarUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                {/* <AvatarImage src={} alt={} /> */}
+                <AvatarFallback className="rounded-lg">
+                  {user?.firstName[0]}
+                  {user?.lastName[0]}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-semibold">
+                  {user?.firstName} {user?.lastName}
+                </span>
+                <span className="truncate text-xs">
+                  {user?.username}@perpedes.com
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -57,24 +68,41 @@ export function SidebarUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  {/* <AvatarImage src={} alt={} /> */}
+                  <AvatarFallback className="rounded-lg">
+                    {user?.firstName[0]}
+                    {user?.lastName[0]}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-semibold">
+                    {user?.firstName} {user?.lastName}
+                  </span>
+                  <span className="truncate text-xs">
+                    {user?.username}@perpedes.com
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => {
+                  navigate("/account");
+                }}
+              >
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => {
+                logoutUser();
+              }}
+            >
               <LogOut />
               Log out
             </DropdownMenuItem>

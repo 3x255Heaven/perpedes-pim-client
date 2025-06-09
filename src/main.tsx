@@ -20,13 +20,30 @@ import { UnderPerformingProducts } from "@/pages/sales/UnderperformingProducts";
 import { Toaster } from "@/shared/sonner";
 
 import "./index.css";
+import Login from "@/pages/login/Login";
+import { AuthProvider } from "@/context/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute/ProtectedRoute";
+import { PublicRoute } from "@/components/PublicRoute/PublicRoute";
+import { Account } from "@/pages/account/Account";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
+    path: "/login",
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
+  },
+  {
     path: "/",
-    element: <ApplicationLayout />,
+    element: (
+      <ProtectedRoute>
+        <ApplicationLayout />
+      </ProtectedRoute>
+    ),
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Products /> },
@@ -38,6 +55,7 @@ const router = createBrowserRouter([
       { path: "customers", element: <Customers /> },
       { path: "employees", element: <Employees /> },
       { path: "add-employee", element: <AddEmployee /> },
+      { path: "account", element: <Account /> },
       { path: "analytics-sales", element: <SalesOverview /> },
       { path: "analytics-customers", element: <CustomerOverview /> },
       {
@@ -56,8 +74,10 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <RouterProvider router={router} />
-        <Toaster />
+        <AuthProvider>
+          <RouterProvider router={router} />
+          <Toaster />
+        </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>

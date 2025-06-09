@@ -11,16 +11,18 @@ import {
   SidebarRail,
 } from "@/shared/sidebar";
 
-import { user } from "@/mocks/mock";
 import {
   analyticsNavigationItems,
   platformNavigationItems,
 } from "@/constants/navigation";
 import { applications } from "@/constants/applications";
+import { useUserQuery } from "@/hooks/useUser";
 
 export function SidebarWrapper({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const userQuery = useUserQuery();
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -31,7 +33,7 @@ export function SidebarWrapper({
         <SidebarNavigation title="Analytics" items={analyticsNavigationItems} />
       </SidebarContent>
       <SidebarFooter>
-        <SidebarUser user={user} />
+        <SidebarUser user={userQuery.data} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
