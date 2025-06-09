@@ -14,13 +14,30 @@ import { Textarea } from "@/shared/textarea";
 import { useState } from "react";
 
 export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
-  const [soleType, setSoleType] = useState<string | string[]>([]);
-  const [soleColor, setSoleColor] = useState<string | string[]>([]);
-  const [shoeType, setShoeType] = useState<string | string[]>([]);
-  const [closureSystem, setClosureSystem] = useState<string | string[]>([]);
-  const [upperMaterial, setUpperMaterial] = useState<string | string[]>([]);
-  const [innerLining, setInnerLining] = useState<string | string[]>([]);
-  const [productFunction, setProductFunction] = useState<string | string[]>([]);
+  const [color, setColor] = useState<string | string[]>(
+    product.colors.map((item: any) => item.id.toString())
+  );
+  const [soleType, setSoleType] = useState<string | string[]>(
+    product.soleTypes.map((item: any) => item.id.toString())
+  );
+  const [soleColor, setSoleColor] = useState<string | string[]>(
+    product.soleColors.map((item: any) => item.id.toString())
+  );
+  const [shoeType, setShoeType] = useState<string | string[]>(
+    product.shoeTypes.map((item: any) => item.id.toString())
+  );
+  const [closureSystem, setClosureSystem] = useState<string | string[]>(
+    product.closureSystems.map((item: any) => item.id.toString())
+  );
+  const [upperMaterial, setUpperMaterial] = useState<string | string[]>(
+    product.upperMaterials.map((item: any) => item.id.toString())
+  );
+  const [innerLining, setInnerLining] = useState<string | string[]>(
+    product.innerLinings.map((item: any) => item.id.toString())
+  );
+  const [productFunction, setProductFunction] = useState<string | string[]>(
+    product.functions.map((item: any) => item.id.toString())
+  );
 
   const colorsTypesQuery = useColorTypesQuery();
   const shoeTypesQuery = useShoeTypesQuery();
@@ -31,21 +48,42 @@ export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
   const functionTypesQuery = useFunctionTypesQuery();
 
   return (
-    <form ref={ref} className="flex gap-4">
-      <div className="w-1/2 aspect-video rounded-xl bg-muted/50 p-4">
+    <form ref={ref} className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2 w-full">
+      <div className="rounded-xl bg-muted/50 p-4">
         <span className="font-bold text-2xl">General Information</span>
 
-        <div className="grid w-full items-center gap-1 mt-4">
-          <Label htmlFor="name" className="text-[#9bc79b]">
-            Name
-          </Label>
-          <Input
-            type="text"
-            id="name"
-            placeholder="Name"
-            name="name"
-            defaultValue={product?.name ?? ""}
-          />
+        <div className="flex gap-4 mt-4 items-baseline">
+          <div className="grid w-full items-center gap-1 mt-4">
+            <Label htmlFor="name" className="text-[#9bc79b]">
+              Name
+            </Label>
+            <Input
+              type="text"
+              id="name"
+              placeholder="Name"
+              name="name"
+              defaultValue={product?.name ?? ""}
+            />
+          </div>
+
+          <div className="grid w-full items-center gap-1">
+            <Label htmlFor="color" className="text-[#9bc79b]">
+              Color
+            </Label>
+            <MultiSelect
+              options={colorsTypesQuery.data ? colorsTypesQuery.data : []}
+              defaultValue={
+                product && product.colors.map((item: any) => item.id.toString())
+              }
+              onValueChange={(value) => {
+                setColor(value);
+              }}
+              placeholder="Color"
+              variant="inverted"
+              maxCount={0}
+            />
+            <input type="hidden" name="color" value={color as string[]} />
+          </div>
         </div>
 
         <div className="flex gap-4 mt-4">
@@ -70,6 +108,7 @@ export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
               id="modelId"
               placeholder="Model ID"
               defaultValue={product?.modelId ?? ""}
+              disabled={true}
               name="modelId"
             />
           </div>
@@ -82,12 +121,16 @@ export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
             </Label>
             <MultiSelect
               options={soleTypesQuery.data ? soleTypesQuery.data : []}
+              defaultValue={
+                product &&
+                product.soleTypes.map((item: any) => item.id.toString())
+              }
               onValueChange={(value) => {
                 setSoleType(value);
               }}
               placeholder="Sole Type"
               variant="inverted"
-              maxCount={1}
+              maxCount={0}
             />
             <input type="hidden" name="soleType" value={soleType as string[]} />
           </div>
@@ -97,12 +140,16 @@ export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
             </Label>
             <MultiSelect
               options={colorsTypesQuery.data ? colorsTypesQuery.data : []}
+              defaultValue={
+                product &&
+                product.soleColors.map((item: any) => item.id.toString())
+              }
               onValueChange={(value) => {
                 setSoleColor(value);
               }}
               placeholder="Sole Color"
               variant="inverted"
-              maxCount={1}
+              maxCount={0}
             />
             <input
               type="hidden"
@@ -124,7 +171,7 @@ export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
           />
         </div>
       </div>
-      <div className="w-1/2 aspect-video rounded-xl bg-muted/50 p-4">
+      <div className="rounded-xl bg-muted/50 p-4">
         <span className="font-bold text-2xl">Types & Systems</span>
 
         <div className="flex gap-4 mt-4">
@@ -137,6 +184,7 @@ export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
               id="factory"
               placeholder="Factory"
               defaultValue={product?.factory ?? ""}
+              disabled={true}
               name="factory"
             />
           </div>
@@ -161,12 +209,16 @@ export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
             </Label>
             <MultiSelect
               options={shoeTypesQuery.data ? shoeTypesQuery.data : []}
+              defaultValue={
+                product &&
+                product.shoeTypes.map((item: any) => item.id.toString())
+              }
               onValueChange={(value) => {
                 setShoeType(value);
               }}
               placeholder="Shoe Type"
               variant="inverted"
-              maxCount={1}
+              maxCount={0}
             />
             <input type="hidden" name="shoeType" value={shoeType as string[]} />
           </div>
@@ -193,12 +245,16 @@ export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
               options={
                 closureSystemTypesQuery.data ? closureSystemTypesQuery.data : []
               }
+              defaultValue={
+                product &&
+                product.closureSystems.map((item: any) => item.id.toString())
+              }
               onValueChange={(value) => {
                 setClosureSystem(value);
               }}
               placeholder="Closure System"
               variant="inverted"
-              maxCount={1}
+              maxCount={0}
             />
             <input
               type="hidden"
@@ -214,12 +270,16 @@ export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
               options={
                 upperMaterialTypesQuery.data ? upperMaterialTypesQuery.data : []
               }
+              defaultValue={
+                product &&
+                product.upperMaterials.map((item: any) => item.id.toString())
+              }
               onValueChange={(value) => {
                 setUpperMaterial(value);
               }}
               placeholder="Upper Material"
               variant="inverted"
-              maxCount={1}
+              maxCount={0}
             />
             <input
               type="hidden"
@@ -238,12 +298,16 @@ export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
               options={
                 innerLiningTypesQuery.data ? innerLiningTypesQuery.data : []
               }
+              defaultValue={
+                product &&
+                product.innerLinings.map((item: any) => item.id.toString())
+              }
               onValueChange={(value) => {
                 setInnerLining(value);
               }}
               placeholder="Inner Lining"
               variant="inverted"
-              maxCount={1}
+              maxCount={0}
             />
             <input
               type="hidden"
@@ -257,12 +321,16 @@ export const ProductFields = ({ product, ref }: { product: any; ref: any }) => {
             </Label>
             <MultiSelect
               options={functionTypesQuery.data ? functionTypesQuery.data : []}
+              defaultValue={
+                product &&
+                product.functions.map((item: any) => item.id.toString())
+              }
               onValueChange={(value) => {
                 setProductFunction(value);
               }}
               placeholder="Function"
               variant="inverted"
-              maxCount={1}
+              maxCount={0}
             />
             <input
               type="hidden"

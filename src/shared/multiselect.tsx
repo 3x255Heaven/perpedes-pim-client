@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { CheckIcon, XCircle, ChevronDown, XIcon } from "lucide-react";
+import { CheckIcon, XCircle, ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Separator } from "@/shared/separator";
@@ -24,7 +24,7 @@ import {
  * Uses class-variance-authority (cva) to define different styles based on "variant" prop.
  */
 const multiSelectVariants = cva(
-  "m-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300",
+  "m-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300",
   {
     variants: {
       variant: {
@@ -57,7 +57,7 @@ interface MultiSelectProps
     /** The text to display for the option. */
     name: string;
     /** The unique value associated with the option. */
-    code: string;
+    id: number;
     /** Optional icon component to display alongside the option. */
     icon?: React.ComponentType<{ className?: string }>;
   }[];
@@ -152,16 +152,6 @@ export const MultiSelect = React.forwardRef<
       onValueChange([]);
     };
 
-    const handleTogglePopover = () => {
-      setIsPopoverOpen((prev) => !prev);
-    };
-
-    const clearExtraOptions = () => {
-      const newSelectedValues = selectedValues.slice(0, maxCount);
-      setSelectedValues(newSelectedValues);
-      onValueChange(newSelectedValues);
-    };
-
     return (
       <Popover
         open={isPopoverOpen}
@@ -172,25 +162,27 @@ export const MultiSelect = React.forwardRef<
           <Button
             ref={ref}
             {...props}
-            onClick={handleTogglePopover}
+            onClick={() => setIsPopoverOpen((prev) => !prev)}
             className={cn(
-              "flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between bg-inherit hover:bg-inherit [&_svg]:pointer-events-auto",
+              "flex w-full flex-wrap gap-2 p-2 rounded-md border min-h-10 h-auto items-center justify-between bg-inherit hover:bg-inherit [&_svg]:pointer-events-auto",
               className
             )}
           >
             {selectedValues.length > 0 ? (
-              <div className="flex justify-between items-center w-full">
-                <div className="flex flex-wrap items-center">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap w-full gap-2">
+                <div className="flex flex-wrap gap-1 items-center flex-1 min-w-0">
                   {selectedValues.slice(0, maxCount).map((value) => {
-                    const option = options.find((o) => o.code === value);
+                    const option = options.find(
+                      (o) => o.id.toString() === value
+                    );
                     const IconComponent = option?.icon;
                     return (
                       <Badge
                         key={value}
-                        className={cn("", multiSelectVariants({ variant }))}
+                        className={multiSelectVariants({ variant })}
                       >
                         {IconComponent && (
-                          <IconComponent className="h-4 w-4 mr-2" />
+                          <IconComponent className="h-4 w-4 mr-1" />
                         )}
                         {option?.name}
                         <XCircle
@@ -206,52 +198,30 @@ export const MultiSelect = React.forwardRef<
                   {selectedValues.length > maxCount && (
                     <Badge
                       className={cn(
-                        "bg-transparent text-foreground border-foreground/1 hover:bg-transparent",
-                        "",
+                        "text-foreground bg-muted border",
                         multiSelectVariants({ variant })
                       )}
                     >
-                      {`+ ${selectedValues.length - maxCount} more`}
-                      <XCircle
-                        className="ml-2 h-4 w-4 cursor-pointer"
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          clearExtraOptions();
-                        }}
-                      />
+                      + {selectedValues.length - maxCount} more
                     </Badge>
                   )}
                 </div>
-                <div className="flex items-center justify-between">
-                  <XIcon
-                    className="h-4 mx-2 cursor-pointer text-muted-foreground"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      handleClear();
-                    }}
-                  />
-                  <Separator
-                    orientation="vertical"
-                    className="flex min-h-6 h-full"
-                  />
-                  <ChevronDown className="h-4 mx-2 cursor-pointer text-muted-foreground" />
+                <div className="flex items-center gap-1 ml-auto shrink-0">
+                  <Separator orientation="vertical" className="h-6" />
+                  <ChevronDown className="h-4 cursor-pointer text-muted-foreground" />
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-between w-full mx-auto">
-                <span className="text-sm text-muted-foreground mx-3">
+              <div className="flex w-full items-center justify-between">
+                <span className="text-sm text-muted-foreground truncate">
                   {placeholder}
                 </span>
-                <ChevronDown className="h-4 cursor-pointer text-muted-foreground mx-2" />
+                <ChevronDown className="h-4 cursor-pointer text-muted-foreground" />
               </div>
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent
-          className="w-auto p-0"
-          align="start"
-          onEscapeKeyDown={() => setIsPopoverOpen(false)}
-        >
+        <PopoverContent className="w-[min(100%,320px)] p-0" align="start">
           <Command>
             <CommandInput
               placeholder="Search..."
@@ -261,11 +231,13 @@ export const MultiSelect = React.forwardRef<
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
                 {options.map((option) => {
-                  const isSelected = selectedValues.includes(option.code);
+                  const isSelected = selectedValues.includes(
+                    option.id.toString()
+                  );
                   return (
                     <CommandItem
-                      key={option.code}
-                      onSelect={() => toggleOption(option.code)}
+                      key={option.id}
+                      onSelect={() => toggleOption(option.id.toString())}
                       className="cursor-pointer"
                     >
                       <div
@@ -288,7 +260,7 @@ export const MultiSelect = React.forwardRef<
               </CommandGroup>
               <CommandSeparator />
               <CommandGroup>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between w-full">
                   {selectedValues.length > 0 && (
                     <>
                       <CommandItem
@@ -297,15 +269,12 @@ export const MultiSelect = React.forwardRef<
                       >
                         Clear
                       </CommandItem>
-                      <Separator
-                        orientation="vertical"
-                        className="flex min-h-6 h-full"
-                      />
+                      <Separator orientation="vertical" className="h-6" />
                     </>
                   )}
                   <CommandItem
                     onSelect={() => setIsPopoverOpen(false)}
-                    className="flex-1 justify-center cursor-pointer max-w-full"
+                    className="flex-1 justify-center cursor-pointer"
                   >
                     Close
                   </CommandItem>

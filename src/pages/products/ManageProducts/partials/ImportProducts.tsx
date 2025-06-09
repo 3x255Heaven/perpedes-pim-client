@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/shared/button";
 import { CircleMinusIcon, UploadIcon } from "lucide-react";
 import { useImportProductsMutation } from "@/hooks/useProducts";
+import { toast } from "sonner";
 
 export const ImportProducts = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -16,7 +17,17 @@ export const ImportProducts = () => {
 
   const handleUpload = () => {
     if (file) {
-      mutation.mutate(file);
+      mutation.mutate(file, {
+        onSuccess: () => {
+          toast(
+            "The import is started in the background, you can proceed to use application. Check log table for status of the import."
+          );
+          setFile(null);
+        },
+        onError: () => {
+          toast("Something went wrong, please try again later.");
+        },
+      });
     }
   };
 

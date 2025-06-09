@@ -17,6 +17,7 @@ import { SalesOverview } from "@/pages/dashboard/SalesOverview";
 import { CustomerOverview } from "@/pages/dashboard/CustomerOverview";
 import { PerformingProducts } from "@/pages/sales/PerformingProducts";
 import { UnderPerformingProducts } from "@/pages/sales/UnderperformingProducts";
+import { Toaster } from "@/shared/sonner";
 
 import "./index.css";
 
@@ -56,6 +57,7 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <RouterProvider router={router} />
+        <Toaster />
       </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>
