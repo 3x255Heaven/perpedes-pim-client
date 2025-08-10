@@ -16,7 +16,7 @@ export const Breadcrumbs = () => {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem className="hidden md:block">
-          <BreadcrumbLink href="#">
+          <BreadcrumbLink href="/products">
             {breadcrumbs[location.pathname as keyof typeof breadcrumbs]
               ? breadcrumbs[location.pathname as keyof typeof breadcrumbs].base
               : "Products"}
