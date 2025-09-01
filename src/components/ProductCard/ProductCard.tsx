@@ -130,6 +130,8 @@ export function ProductCard({ product }: ProductCardProps) {
         isModalOpen={openModal}
         setModalOpen={setOpenModal}
         products={product.variations}
+        productModelId={product.modelId}
+        productFunctions={product.functions}
       />
     </>
   );
