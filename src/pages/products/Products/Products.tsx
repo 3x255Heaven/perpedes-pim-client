@@ -35,25 +35,31 @@ interface ProductType {
   prices: Price[];
 }
 
+type MultiValueProperty = {
+  id: number;
+  code: string;
+  name: string;
+};
+
 export type Product = {
+  variations: ProductType[];
   id: number;
   name: string;
   description: string;
   hmvNumber: string;
   modelId: string;
   factory: string;
-  color: string;
+  colors: MultiValueProperty[];
   picture: string;
   widthSystem: string;
-  shoeType: string;
-  closureSystem: string;
-  upperMaterial: string;
-  innerLining: string;
-  soleType: string;
-  soleColor: string;
-  function: string;
+  shoeTypes: MultiValueProperty[];
+  closureSystems: MultiValueProperty[];
+  upperMaterials: MultiValueProperty[];
+  innerLinings: MultiValueProperty[];
+  soleTypes: MultiValueProperty[];
+  soleColors: MultiValueProperty[];
+  functions: MultiValueProperty[];
   smf: string;
-  variations: ProductType[];
 };
 
 export const Products = () => {
