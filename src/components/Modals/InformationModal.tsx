@@ -6,6 +6,12 @@ import {
   DialogTitle,
 } from "@/shared/dialog";
 
+type MultiValueProperty = {
+  id: number;
+  code: string;
+  name: string;
+};
+
 export type Product = {
   id: number;
   name: string;
@@ -13,16 +19,16 @@ export type Product = {
   hmvNumber: string;
   modelId: string;
   factory: string;
-  color: string;
+  colors: MultiValueProperty[];
   picture: string;
   widthSystem: string;
-  shoeType: string;
-  closureSystem: string;
-  upperMaterial: string;
-  innerLining: string;
-  soleType: string;
-  soleColor: string;
-  function: string;
+  shoeTypes: MultiValueProperty[];
+  closureSystems: MultiValueProperty[];
+  upperMaterials: MultiValueProperty[];
+  innerLinings: MultiValueProperty[];
+  soleTypes: MultiValueProperty[];
+  soleColors: MultiValueProperty[];
+  functions: MultiValueProperty[];
   smf: string;
 };
 
@@ -81,11 +87,11 @@ export const InformationModal = ({
         </DialogHeader>
 
         <div className="flex flex-col sm:flex-row h-[70vh] sm:h-[80vh]">
-          <div className="w-full sm:w-1/2 bg-gray-100 border-r border-gray-300 flex items-center justify-center">
+          <div className="w-full sm:w-1/2 bg-gray-100 flex items-center justify-center overflow-hidden rounded-none sm:rounded-bl-xl sm:rounded-tl-xl p-4">
             <img
               src={product.picture}
               alt={product.name}
-              className="h-full w-full object-cover rounded-none sm:rounded-bl-xl sm:rounded-tl-xl"
+              className="h-full w-full object-contain transition-transform duration-300 hover:scale-105"
               loading="lazy"
             />
           </div>
@@ -100,15 +106,55 @@ export const InformationModal = ({
               <DetailRow label="HMV Number" value={product.hmvNumber} mono />
               <DetailRow label="Model ID" value={product.modelId} mono />
               <DetailRow label="Factory" value={product.factory} />
-              <DetailRow label="Color" value={product.color} />
+              <DetailRow
+                label="Color"
+                value={product.colors
+                  .map((color) => color.name.toUpperCase())
+                  .join(", ")}
+              />
               <DetailRow label="Width System" value={product.widthSystem} />
-              <DetailRow label="Shoe Type" value={product.shoeType} />
-              <DetailRow label="Closure System" value={product.closureSystem} />
-              <DetailRow label="Upper Material" value={product.upperMaterial} />
-              <DetailRow label="Inner Lining" value={product.innerLining} />
-              <DetailRow label="Sole Type" value={product.soleType} />
-              <DetailRow label="Sole Color" value={product.soleColor} />
-              <DetailRow label="Function" value={product.function} />
+              <DetailRow
+                label="Shoe Type"
+                value={product.shoeTypes
+                  .map((color) => color.name.toUpperCase())
+                  .join(", ")}
+              />
+              <DetailRow
+                label="Closure System"
+                value={product.closureSystems
+                  .map((color) => color.name.toUpperCase())
+                  .join(", ")}
+              />
+              <DetailRow
+                label="Upper Material"
+                value={product.upperMaterials
+                  .map((color) => color.name.toUpperCase())
+                  .join(", ")}
+              />
+              <DetailRow
+                label="Inner Lining"
+                value={product.innerLinings
+                  .map((color) => color.name.toUpperCase())
+                  .join(", ")}
+              />
+              <DetailRow
+                label="Sole Type"
+                value={product.soleTypes
+                  .map((color) => color.name.toUpperCase())
+                  .join(", ")}
+              />
+              <DetailRow
+                label="Sole Color"
+                value={product.soleColors
+                  .map((color) => color.name.toUpperCase())
+                  .join(", ")}
+              />
+              <DetailRow
+                label="Function"
+                value={product.functions
+                  .map((color) => color.name.toUpperCase())
+                  .join(", ")}
+              />
               <DetailRow label="SMF" value={product.smf} />
             </div>
           </div>

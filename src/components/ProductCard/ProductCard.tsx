@@ -69,11 +69,11 @@ export function ProductCard({ product }: ProductCardProps) {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        <div className="relative h-[320px]">
+        <div className="relative w-full aspect-[4/3] bg-gray-100 flex items-center justify-center overflow-hidden rounded-t-xl">
           <img
             src={product.picture}
             alt={product.name}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain transition-transform duration-300 hover:scale-105"
           />
 
           <div
