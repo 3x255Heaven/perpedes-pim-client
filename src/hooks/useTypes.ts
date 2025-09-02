@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useColorTypesQuery() {
   return useQuery({
-    queryKey: ["products"],
+    queryKey: ["colors"],
     queryFn: async () => {
       const response = await axiosInstance.get("/colors");
       return response.data;
@@ -53,7 +53,7 @@ export function useInnerLiningTypesQuery() {
 
 export function useClosureSystemTypesQuery() {
   return useQuery({
-    queryKey: ["inner-linings"],
+    queryKey: ["closure-systems"],
     queryFn: async () => {
       const response = await axiosInstance.get("/closure-systems");
       return response.data;
