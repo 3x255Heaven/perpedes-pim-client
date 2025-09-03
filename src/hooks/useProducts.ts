@@ -1,5 +1,75 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
+
+export type Stock = {
+  id: number;
+  stockQuantity: number;
+  blockedStockQuantity: number;
+  batch: string;
+  stockId: string;
+};
+
+export type Price = {
+  id: number;
+  price: number;
+  priceList: string;
+  currency: string;
+  unit: string;
+};
+
+export type ProductType = {
+  id: number;
+  size: string;
+  width: string;
+  unit: string;
+  productId: number;
+  stocks: Stock[];
+  prices: Price[];
+};
+
+export type MultiValueProperty = {
+  id: number;
+  code: string;
+  name: string;
+};
+
+export type Product = {
+  variations: ProductType[];
+  id: number;
+  name: string;
+  description: string;
+  hmvNumber: string;
+  modelId: string;
+  factory: string;
+  colors: MultiValueProperty[];
+  picture: string;
+  widthSystem: string;
+  shoeTypes: MultiValueProperty[];
+  closureSystems: MultiValueProperty[];
+  upperMaterials: MultiValueProperty[];
+  innerLinings: MultiValueProperty[];
+  soleTypes: MultiValueProperty[];
+  soleColors: MultiValueProperty[];
+  functions: MultiValueProperty[];
+  smf: string;
+};
+
+type ProductsResponse = {
+  currentPage: number;
+  totalPages: number;
+  pageSize: number;
+  totalElements: number;
+  products: Product[];
+};
+
+const getNextPageParam = (lastPage: {
+  currentPage: number;
+  totalPages: number;
+}) => {
+  return lastPage.currentPage + 1 < lastPage.totalPages
+    ? lastPage.currentPage + 1
+    : undefined;
+};
 
 export function useImportProductsMutation() {
   return useMutation({
@@ -17,18 +87,6 @@ export function useImportProductsMutation() {
         }
       );
 
-      return response.data;
-    },
-  });
-}
-
-export function useProductsQuery(page: number, size: number) {
-  return useQuery({
-    queryKey: ["products", page, size],
-    queryFn: async () => {
-      const response = await axiosInstance.get(
-        `/products?page=${page}&size=${size}`
-      );
       return response.data;
     },
   });
@@ -57,6 +115,7 @@ export function useUpdateProductMutation() {
         `/products/${productId}`,
         updatedProduct
       );
+
       return response.data;
     },
   });
@@ -95,28 +154,57 @@ export function useDeleteProductImageMutation() {
       const response = await axiosInstance.delete(
         `/products/${productId}/image`
       );
+
       return response.data;
     },
   });
 }
 
-export const useProductSearchQuery = (
-  searchTerm: string,
-  pageIndex: number,
-  pageSize: number
+export const useProductsInfiniteQuery = (
+  size: number,
+  sort: string,
+  order: string
 ) => {
-  return useQuery({
-    queryKey: ["products-search", searchTerm, pageIndex, pageSize],
-    queryFn: async () => {
-      const response = await axiosInstance.get(`/products/search`, {
+  return useInfiniteQuery<ProductsResponse>({
+    queryKey: ["products", size, sort, order],
+    queryFn: async ({ pageParam }) => {
+      const response = await axiosInstance.get("/products", {
         params: {
-          searchTerm,
-          page: pageIndex,
-          size: pageSize,
+          page: pageParam,
+          size,
+          sort: `${sort},${order}`,
         },
       });
+
       return response.data;
     },
-    enabled: !!searchTerm,
+    initialPageParam: 0,
+    getNextPageParam,
+  });
+};
+
+export const useProductSearchInfiniteQuery = (
+  search: string,
+  size: number,
+  sort: string,
+  order: string
+) => {
+  return useInfiniteQuery<ProductsResponse>({
+    queryKey: ["products", "search", search, size, sort, order],
+    queryFn: async ({ pageParam }) => {
+      const response = await axiosInstance.get("/products/search", {
+        params: {
+          searchTerm: search,
+          page: pageParam,
+          size,
+          sort: `${sort},${order}`,
+        },
+      });
+
+      return response.data;
+    },
+    enabled: !!search,
+    initialPageParam: 0,
+    getNextPageParam,
   });
 };

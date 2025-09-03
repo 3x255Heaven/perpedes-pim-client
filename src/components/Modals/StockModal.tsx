@@ -1,38 +1,7 @@
+import { MultiValueProperty, ProductType } from "@/hooks/useProducts";
 import { Badge } from "@/shared/badge";
 import { Card } from "@/shared/card";
 import { Dialog, DialogContent } from "@/shared/dialog";
-
-interface Stock {
-  id: number;
-  stockQuantity: number;
-  blockedStockQuantity: number;
-  batch: string;
-  stockId: string;
-}
-
-interface Price {
-  id: number;
-  price: number;
-  priceList: string;
-  currency: string;
-  unit: string;
-}
-
-interface ProductType {
-  id: number;
-  size: string;
-  width: string;
-  unit: string;
-  productId: number;
-  stocks: Stock[];
-  prices: Price[];
-}
-
-type MultiValueProperty = {
-  id: number;
-  code: string;
-  name: string;
-};
 
 interface StockModalProps {
   isModalOpen: "info" | "stock" | null;

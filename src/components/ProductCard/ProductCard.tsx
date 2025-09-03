@@ -5,59 +5,7 @@ import { Button } from "@/shared/button";
 import { Info, Box, Eye } from "lucide-react";
 import { InformationModal } from "../Modals/InformationModal";
 import { StockModal } from "../Modals/StockModal";
-
-interface Stock {
-  id: number;
-  stockQuantity: number;
-  blockedStockQuantity: number;
-  batch: string;
-  stockId: string;
-}
-
-interface Price {
-  id: number;
-  price: number;
-  priceList: string;
-  currency: string;
-  unit: string;
-}
-
-interface ProductType {
-  id: number;
-  size: string;
-  width: string;
-  unit: string;
-  productId: number;
-  stocks: Stock[];
-  prices: Price[];
-}
-
-type MultiValueProperty = {
-  id: number;
-  code: string;
-  name: string;
-};
-
-export type Product = {
-  variations: ProductType[];
-  id: number;
-  name: string;
-  description: string;
-  hmvNumber: string;
-  modelId: string;
-  factory: string;
-  colors: MultiValueProperty[];
-  picture: string;
-  widthSystem: string;
-  shoeTypes: MultiValueProperty[];
-  closureSystems: MultiValueProperty[];
-  upperMaterials: MultiValueProperty[];
-  innerLinings: MultiValueProperty[];
-  soleTypes: MultiValueProperty[];
-  soleColors: MultiValueProperty[];
-  functions: MultiValueProperty[];
-  smf: string;
-};
+import { Product } from "@/hooks/useProducts";
 
 interface ProductCardProps {
   product: Product;
@@ -71,7 +19,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <>
       <Card
-        className="relative w-[280px] overflow-hidden rounded-xl shadow-md"
+        className="relative w-full overflow-hidden rounded-xl shadow-md"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >

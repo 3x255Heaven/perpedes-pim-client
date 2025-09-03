@@ -1,3 +1,4 @@
+import { Product } from "@/hooks/useProducts";
 import { Badge } from "@/shared/badge";
 import {
   Dialog,
@@ -5,32 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/dialog";
-
-type MultiValueProperty = {
-  id: number;
-  code: string;
-  name: string;
-};
-
-export type Product = {
-  id: number;
-  name: string;
-  description: string;
-  hmvNumber: string;
-  modelId: string;
-  factory: string;
-  colors: MultiValueProperty[];
-  picture: string;
-  widthSystem: string;
-  shoeTypes: MultiValueProperty[];
-  closureSystems: MultiValueProperty[];
-  upperMaterials: MultiValueProperty[];
-  innerLinings: MultiValueProperty[];
-  soleTypes: MultiValueProperty[];
-  soleColors: MultiValueProperty[];
-  functions: MultiValueProperty[];
-  smf: string;
-};
 
 interface InformationModalProps {
   isModalOpen: "info" | "stock" | null;

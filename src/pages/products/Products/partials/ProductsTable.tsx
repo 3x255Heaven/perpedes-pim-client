@@ -33,52 +33,7 @@ import {
 } from "@/shared/select";
 
 import { Button } from "@/shared/button";
-
-export type Product = {
-  id: number;
-  name: string;
-  description: string;
-  hmvNumber: string;
-  modelId: string;
-  factory: string;
-  color: string;
-  picture: string;
-  widthSystem: string;
-  shoeType: string;
-  closureSystem: string;
-  upperMaterial: string;
-  innerLining: string;
-  soleType: string;
-  soleColor: string;
-  function: string;
-  smf: string;
-  //   variations: [
-  //     {
-  //       id: number;
-  //       size: string;
-  //       width: string;
-  //       productId: number;
-  //       stocks: [
-  //         {
-  //           id: number;
-  //           stockQuantity: number;
-  //           blockedStockQuantity: number;
-  //           batch: string;
-  //           stockId: string;
-  //         }
-  //       ];
-  //       prices: [
-  //         {
-  //           id: number;
-  //           price: number;
-  //           priceList: string;
-  //           currency: string;
-  //           unit: string;
-  //         }
-  //       ];
-  //     }
-  //   ];
-};
+import { Product } from "@/hooks/useProducts";
 
 export const columns: ColumnDef<Product>[] = [
   {
