@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/select";
+import { Input } from "@/shared/input";
 
 interface StockModalProps {
   isModalOpen: "info" | "stock" | null;
@@ -28,6 +29,7 @@ export const StockModal = ({
 }: StockModalProps) => {
   const [unitFilter, setUnitFilter] = useState<string | null>(null);
   const [widthFilter, setWidthFilter] = useState<string | null>(null);
+  const [sizeFilter, setSizeFilter] = useState<string>("");
 
   if (!products || products.length === 0) return null;
 
@@ -70,9 +72,13 @@ export const StockModal = ({
     return stocksForTable.filter((item) => {
       const unitMatch = unitFilter ? item.unit === unitFilter : true;
       const widthMatch = widthFilter ? item.width === widthFilter : true;
-      return unitMatch && widthMatch;
+      const sizeMatch = sizeFilter
+        ? item.size?.toLowerCase().includes(sizeFilter.toLowerCase())
+        : true;
+
+      return unitMatch && widthMatch && sizeMatch;
     });
-  }, [stocksForTable, unitFilter, widthFilter]);
+  }, [stocksForTable, unitFilter, widthFilter, sizeFilter]);
 
   const isFilterApplied = unitFilter || widthFilter;
   const totalStock = filteredStocks.reduce((acc, item) => acc + item.stock, 0);
@@ -118,6 +124,14 @@ export const StockModal = ({
                     ))}
                   </SelectContent>
                 </Select>
+
+                <Input
+                  type="text"
+                  placeholder="Filter by Size"
+                  value={sizeFilter}
+                  onChange={(e) => setSizeFilter(e.target.value)}
+                  className="w-[120px]"
+                />
               </div>
 
               {isFilterApplied && (
