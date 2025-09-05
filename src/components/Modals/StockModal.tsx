@@ -67,13 +67,13 @@ export const StockModal = ({
       onOpenChange={() => setModalOpen(null)}
     >
       <DialogContent className="max-w-7xl w-full sm:max-w-6xl md:max-w-7xl p-0">
-        <div className="flex h-[600px] bg-black">
-          <div className="flex-1 p-4 overflow-auto border-r">
+        <div className="flex h-[600px] bg-white dark:bg-black text-black dark:text-white">
+          <div className="flex-1 p-4 overflow-auto border-r border-gray-200 dark:border-gray-700">
             <table className="w-full text-sm">
               <thead>
                 <tr>
                   <th className="text-left p-2">Artikelnummer</th>
-                  <th className="text-left p-2">Funktion</th> {/* TODO */}
+                  <th className="text-left p-2">Funktion</th>
                   <th className="text-left p-2">Modell ID</th>
                   <th className="text-left p-2">Seite</th>
                   <th className="text-left p-2">Größe</th>
@@ -85,7 +85,10 @@ export const StockModal = ({
               </thead>
               <tbody>
                 {stocksForTable.map((item) => (
-                  <tr key={`${item.id}-${item.batch}`} className="border-b">
+                  <tr
+                    key={`${item.id}-${item.batch}`}
+                    className="border-b border-gray-200 dark:border-gray-700"
+                  >
                     <td className="p-2">{item.id}</td>
                     <td className="p-2">{item.productFunction}</td>
                     <td className="p-2">
@@ -99,17 +102,17 @@ export const StockModal = ({
                     <td className="p-2">{item.batch}</td>
                     <td className="p-2">
                       {item.status === "In Stock" && (
-                        <Badge className="bg-green-400 text-white">
+                        <Badge className="bg-green-100 text-green-700 dark:bg-green-400 dark:text-white">
                           In Stock
                         </Badge>
                       )}
                       {item.status === "Low Stock" && (
-                        <Badge className="bg-orange-400 text-white">
+                        <Badge className="bg-yellow-100 text-yellow-700 dark:bg-orange-400 dark:text-white">
                           Low Stock
                         </Badge>
                       )}
                       {item.status === "No Stock" && (
-                        <Badge className="bg-red-400 text-white">
+                        <Badge className="bg-red-100 text-red-700 dark:bg-red-400 dark:text-white">
                           No Stock
                         </Badge>
                       )}
