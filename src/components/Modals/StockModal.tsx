@@ -1,7 +1,15 @@
+import { useState, useMemo } from "react";
 import { MultiValueProperty, ProductType } from "@/hooks/useProducts";
 import { Badge } from "@/shared/badge";
 import { Card } from "@/shared/card";
 import { Dialog, DialogContent } from "@/shared/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/select";
 
 interface StockModalProps {
   isModalOpen: "info" | "stock" | null;
@@ -18,6 +26,9 @@ export const StockModal = ({
   productModelId,
   productFunctions,
 }: StockModalProps) => {
+  const [unitFilter, setUnitFilter] = useState<string | null>(null);
+  const [widthFilter, setWidthFilter] = useState<string | null>(null);
+
   if (!products || products.length === 0) return null;
 
   const stocksForTable = products.flatMap((product) =>
@@ -41,6 +52,7 @@ export const StockModal = ({
         productFunction: productFunctions.map((f) => f.name).join(", "),
         modelId: productModelId,
         unit: product.unit,
+        width: product.width,
         size: product.size,
         stock: stock.stockQuantity,
         price: displayedPrice,
@@ -51,15 +63,19 @@ export const StockModal = ({
     })
   );
 
-  const totalStock = products.reduce(
-    (acc, product) =>
-      acc +
-      product.stocks.reduce(
-        (stockAcc, stock) => stockAcc + stock.stockQuantity,
-        0
-      ),
-    0
-  );
+  const units = Array.from(new Set(stocksForTable.map((item) => item.unit)));
+  const widths = Array.from(new Set(stocksForTable.map((item) => item.width)));
+
+  const filteredStocks = useMemo(() => {
+    return stocksForTable.filter((item) => {
+      const unitMatch = unitFilter ? item.unit === unitFilter : true;
+      const widthMatch = widthFilter ? item.width === widthFilter : true;
+      return unitMatch && widthMatch;
+    });
+  }, [stocksForTable, unitFilter, widthFilter]);
+
+  const isFilterApplied = unitFilter || widthFilter;
+  const totalStock = filteredStocks.reduce((acc, item) => acc + item.stock, 0);
 
   return (
     <Dialog
@@ -69,6 +85,74 @@ export const StockModal = ({
       <DialogContent className="max-w-7xl w-full sm:max-w-6xl md:max-w-7xl p-0">
         <div className="flex h-[600px] bg-white dark:bg-black text-black dark:text-white">
           <div className="flex-1 p-4 overflow-auto border-r border-gray-200 dark:border-gray-700">
+            <div className="flex justify-between">
+              <div className="flex gap-4 mb-4">
+                <Select
+                  onValueChange={(val) => setUnitFilter(val)}
+                  value={unitFilter || ""}
+                >
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Filter by Unit" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {units.map((unit) => (
+                      <SelectItem key={unit} value={unit}>
+                        {unit}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select
+                  onValueChange={(val) => setWidthFilter(val)}
+                  value={widthFilter || ""}
+                >
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Filter by Width" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {widths.map((width) => (
+                      <SelectItem key={width} value={width}>
+                        {width}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {isFilterApplied && (
+                <div className="flex gap-2 mb-4 flex-wrap">
+                  {unitFilter && (
+                    <Badge
+                      className="flex items-center gap-2 px-2 py-1 bg-blue-100 text-black dark:bg-blue-400 dark:text-white cursor-pointer"
+                      onClick={() => setUnitFilter(null)}
+                    >
+                      <span className="font-bold">Unit:</span>
+                      <span>{unitFilter}</span>
+                    </Badge>
+                  )}
+                  {widthFilter && (
+                    <Badge
+                      className="flex items-center gap-2 px-2 py-1 bg-blue-100 text-black dark:bg-blue-400 dark:text-white cursor-pointer"
+                      onClick={() => setWidthFilter(null)}
+                    >
+                      <span className="font-bold">Width:</span>
+                      <span>{widthFilter}</span>
+                    </Badge>
+                  )}
+                  <Badge
+                    onClick={() => {
+                      setUnitFilter(null);
+                      setWidthFilter(null);
+                    }}
+                    className="flex items-center gap-2 px-2 py-1 bg-red-400 text-white cursor-pointer"
+                  >
+                    Clear All
+                  </Badge>
+                </div>
+              )}
+            </div>
+
             <table className="w-full text-sm">
               <thead>
                 <tr>
@@ -84,7 +168,7 @@ export const StockModal = ({
                 </tr>
               </thead>
               <tbody>
-                {stocksForTable.map((item) => (
+                {filteredStocks.map((item) => (
                   <tr
                     key={`${item.id}-${item.batch}`}
                     className="border-b border-gray-200 dark:border-gray-700"
@@ -127,13 +211,13 @@ export const StockModal = ({
           <div className="w-[400px] p-4 overflow-auto">
             <h2 className="text-lg font-semibold mb-2">Stock Summary</h2>
             <p className="text-sm text-gray-500 mb-4">
-              Showing stock details for {products.length} products
+              Showing stock details for {filteredStocks.length} products
             </p>
 
             <Card className="p-3 text-center mb-4">
               <p className="font-bold text-lg">{totalStock}</p>
               <p className="text-xs text-gray-500">
-                Total {products[0]?.unit.toLowerCase()}s in Stock
+                Total amount of variations in Stock
               </p>
             </Card>
 
