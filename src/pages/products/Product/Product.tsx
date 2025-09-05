@@ -201,7 +201,10 @@ export const Product = () => {
           </div>
         </div>
 
-        <Variations variations={productQuery.data.variations} />
+        <Variations
+          variations={productQuery.data.variations}
+          modelId={productQuery.data.modelId}
+        />
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/shared/select";
 import { Input } from "@/shared/input";
+import { PRODUCT_LEG_TYPES } from "@/constants/product";
 
 interface StockModalProps {
   isModalOpen: "info" | "stock" | null;
@@ -20,6 +21,19 @@ interface StockModalProps {
   productFunctions: MultiValueProperty[];
 }
 
+const getDisplayedPrice = (product: ProductType) => {
+  const eur = product.prices.find((p) => p.currency === "EUR");
+  return eur ?? product.prices[0];
+};
+
+const getStockStatus = (
+  stockQuantity: number
+): "No Stock" | "Low Stock" | "In Stock" => {
+  if (stockQuantity === 0) return "No Stock";
+  if (stockQuantity <= 2) return "Low Stock";
+  return "In Stock";
+};
+
 export const StockModal = ({
   isModalOpen,
   setModalOpen,
@@ -27,29 +41,36 @@ export const StockModal = ({
   productModelId,
   productFunctions,
 }: StockModalProps) => {
-  const [unitFilter, setUnitFilter] = useState<string | null>(null);
-  const [widthFilter, setWidthFilter] = useState<string | null>(null);
-  const [sizeFilter, setSizeFilter] = useState<string>("");
+  const [filters, setFilters] = useState({
+    unit: "",
+    width: "",
+    size: "",
+  });
 
-  if (!products || products.length === 0) return null;
+  const stocksForTable = useMemo(() => {
+    return products.flatMap((product) => {
+      const priceObj = getDisplayedPrice(product);
 
-  const stocksForTable = products.flatMap((product) =>
-    product.stocks.map((stock) => {
-      const eurPriceObj = product.prices.find((p) => p.currency === "EUR");
-      const displayedPrice = eurPriceObj
-        ? eurPriceObj.price
-        : product.prices[0]?.price;
-
-      let status: "No Stock" | "Low Stock" | "In Stock";
-      if (stock.stockQuantity === 0) {
-        status = "No Stock";
-      } else if (stock.stockQuantity <= 2) {
-        status = "Low Stock";
-      } else {
-        status = "In Stock";
+      if (!product.stocks.length) {
+        return {
+          id: `${product.width}${productModelId}${
+            //@ts-ignore
+            PRODUCT_LEG_TYPES[product.unit]
+          }${product.size}`,
+          productFunction: productFunctions.map((f) => f.name).join(", "),
+          modelId: productModelId,
+          unit: product.unit,
+          width: product.width,
+          size: product.size,
+          stock: 0,
+          price: priceObj?.price ?? 0,
+          currency: priceObj?.currency ?? "",
+          status: "No Stock",
+          batch: "N/A",
+        };
       }
 
-      return {
+      return product.stocks.map((stock) => ({
         id: stock.stockId,
         productFunction: productFunctions.map((f) => f.name).join(", "),
         modelId: productModelId,
@@ -57,31 +78,38 @@ export const StockModal = ({
         width: product.width,
         size: product.size,
         stock: stock.stockQuantity,
-        price: displayedPrice,
-        currency: eurPriceObj?.currency || product.prices[0]?.currency,
-        status,
+        price: priceObj?.price ?? 0,
+        currency: priceObj?.currency ?? "",
+        status: getStockStatus(stock.stockQuantity),
         batch: stock.batch,
-      };
-    })
-  );
+      }));
+    });
+  }, [products, productFunctions, productModelId]);
 
-  const units = Array.from(new Set(stocksForTable.map((item) => item.unit)));
-  const widths = Array.from(new Set(stocksForTable.map((item) => item.width)));
+  const units = useMemo(
+    () => Array.from(new Set(stocksForTable.map((s) => s.unit))),
+    [stocksForTable]
+  );
+  const widths = useMemo(
+    () => Array.from(new Set(stocksForTable.map((s) => s.width))),
+    [stocksForTable]
+  );
 
   const filteredStocks = useMemo(() => {
     return stocksForTable.filter((item) => {
-      const unitMatch = unitFilter ? item.unit === unitFilter : true;
-      const widthMatch = widthFilter ? item.width === widthFilter : true;
-      const sizeMatch = sizeFilter
-        ? item.size?.toLowerCase().includes(sizeFilter.toLowerCase())
-        : true;
-
-      return unitMatch && widthMatch && sizeMatch;
+      const { unit, width, size } = filters;
+      return (
+        (!unit || item.unit === unit) &&
+        (!width || item.width === width) &&
+        (!size || item.size?.toLowerCase().includes(size.toLowerCase()))
+      );
     });
-  }, [stocksForTable, unitFilter, widthFilter, sizeFilter]);
+  }, [stocksForTable, filters]);
 
-  const isFilterApplied = unitFilter || widthFilter;
+  const isFilterApplied = Boolean(filters.unit || filters.width);
   const totalStock = filteredStocks.reduce((acc, item) => acc + item.stock, 0);
+
+  if (!products.length) return null;
 
   return (
     <Dialog
@@ -94,8 +122,10 @@ export const StockModal = ({
             <div className="flex justify-between">
               <div className="flex gap-4 mb-4">
                 <Select
-                  onValueChange={(val) => setUnitFilter(val)}
-                  value={unitFilter || ""}
+                  onValueChange={(val) =>
+                    setFilters((f) => ({ ...f, unit: val }))
+                  }
+                  value={filters.unit}
                 >
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Filter by Unit" />
@@ -110,8 +140,10 @@ export const StockModal = ({
                 </Select>
 
                 <Select
-                  onValueChange={(val) => setWidthFilter(val)}
-                  value={widthFilter || ""}
+                  onValueChange={(val) =>
+                    setFilters((f) => ({ ...f, width: val }))
+                  }
+                  value={filters.width}
                 >
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Filter by Width" />
@@ -128,37 +160,38 @@ export const StockModal = ({
                 <Input
                   type="text"
                   placeholder="Filter by Size"
-                  value={sizeFilter}
-                  onChange={(e) => setSizeFilter(e.target.value)}
+                  value={filters.size}
+                  onChange={(e) =>
+                    setFilters((f) => ({ ...f, size: e.target.value }))
+                  }
                   className="w-[120px]"
                 />
               </div>
 
               {isFilterApplied && (
                 <div className="flex gap-2 mb-4 flex-wrap">
-                  {unitFilter && (
+                  {filters.unit && (
                     <Badge
                       className="flex items-center gap-2 px-2 py-1 bg-blue-100 text-black dark:bg-blue-400 dark:text-white cursor-pointer"
-                      onClick={() => setUnitFilter(null)}
+                      onClick={() => setFilters((f) => ({ ...f, unit: "" }))}
                     >
                       <span className="font-bold">Unit:</span>
-                      <span>{unitFilter}</span>
+                      <span>{filters.unit}</span>
                     </Badge>
                   )}
-                  {widthFilter && (
+                  {filters.width && (
                     <Badge
                       className="flex items-center gap-2 px-2 py-1 bg-blue-100 text-black dark:bg-blue-400 dark:text-white cursor-pointer"
-                      onClick={() => setWidthFilter(null)}
+                      onClick={() => setFilters((f) => ({ ...f, width: "" }))}
                     >
                       <span className="font-bold">Width:</span>
-                      <span>{widthFilter}</span>
+                      <span>{filters.width}</span>
                     </Badge>
                   )}
                   <Badge
-                    onClick={() => {
-                      setUnitFilter(null);
-                      setWidthFilter(null);
-                    }}
+                    onClick={() =>
+                      setFilters({ unit: "", width: "", size: "" })
+                    }
                     className="flex items-center gap-2 px-2 py-1 bg-red-400 text-white cursor-pointer"
                   >
                     Clear All
