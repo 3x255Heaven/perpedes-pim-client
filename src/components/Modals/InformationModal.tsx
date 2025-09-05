@@ -34,7 +34,7 @@ function DetailRow({
         variant="secondary"
         className={`${
           mono ? "font-mono" : "font-normal"
-        } text-gray-900 dark:text-gray-100 py-2 px-4`}
+        } text-gray-900 dark:text-gray-100 py-2 px-4 whitespace-normal break-words`}
       >
         {displayValue}
       </Badge>

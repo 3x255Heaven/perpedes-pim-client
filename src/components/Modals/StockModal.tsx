@@ -27,6 +27,15 @@ export const StockModal = ({
         ? eurPriceObj.price
         : product.prices[0]?.price;
 
+      let status: "No Stock" | "Low Stock" | "In Stock";
+      if (stock.stockQuantity === 0) {
+        status = "No Stock";
+      } else if (stock.stockQuantity <= 2) {
+        status = "Low Stock";
+      } else {
+        status = "In Stock";
+      }
+
       return {
         id: stock.stockId,
         productFunction: productFunctions.map((f) => f.name).join(", "),
@@ -36,7 +45,7 @@ export const StockModal = ({
         stock: stock.stockQuantity,
         price: displayedPrice,
         currency: eurPriceObj?.currency || product.prices[0]?.currency,
-        status: stock.stockQuantity > 5 ? "In Stock" : "Low Stock",
+        status,
         batch: stock.batch,
       };
     })
@@ -90,13 +99,18 @@ export const StockModal = ({
                     <td className="p-2">{item.batch}</td>
                     <td className="p-2">
                       {item.status === "In Stock" && (
-                        <Badge className="bg-green-100 text-green-700">
+                        <Badge className="bg-green-400 text-white">
                           In Stock
                         </Badge>
                       )}
                       {item.status === "Low Stock" && (
-                        <Badge className="bg-yellow-100 text-yellow-700">
+                        <Badge className="bg-orange-400 text-white">
                           Low Stock
+                        </Badge>
+                      )}
+                      {item.status === "No Stock" && (
+                        <Badge className="bg-red-400 text-white">
+                          No Stock
                         </Badge>
                       )}
                     </td>
