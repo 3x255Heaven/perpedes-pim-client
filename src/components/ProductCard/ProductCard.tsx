@@ -19,7 +19,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <>
       <Card
-        className="relative w-full overflow-hidden rounded-xl shadow-md"
+        className="relative w-full overflow-hidden rounded-xl shadow-md p-0"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
@@ -52,7 +52,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
 
-        <CardContent className="flex items-center justify-between p-4">
+        <CardContent className="flex items-center justify-between p-4 pt-0">
           <div>
             <h3 className="font-semibold text-lg">{product.name}</h3>
             <p className="text-sm text-gray-500">Model ID: {product.modelId}</p>
