@@ -3,6 +3,7 @@ import { Button } from "@/shared/button";
 import {
   useDeleteProductImageMutation,
   useProductQuery,
+  useSetProductImageAsPrimaryMutation,
   useUpdateProductMutation,
 } from "@/hooks/useProducts";
 import { Variations } from "./partials/Variations";
@@ -10,27 +11,37 @@ import { ProductFields } from "./partials/ProductFields";
 import { Spinner } from "@/shared/spinner";
 import { ProductImageUpload } from "./partials/ProductImageUpload";
 import { useRef, useState } from "react";
-import { LoaderIcon, MinusCircle } from "lucide-react";
+import { LoaderIcon, EllipsisVertical } from "lucide-react";
 import { toast } from "sonner";
 
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
 } from "@/shared/dialog";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/shared/dropdown-menu";
+
 export const Product = () => {
   const { id } = useParams();
-  const formRef = useRef(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const productQuery = useProductQuery(id as string);
   const updateProductMutation = useUpdateProductMutation();
   const deleteImageMutation = useDeleteProductImageMutation();
+  const setImageAsPrimaryMutation = useSetProductImageAsPrimaryMutation();
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  const images = productQuery.data?.images || [];
 
   const handleSubmit = () => {
     if (formRef.current) {
@@ -83,13 +94,29 @@ export const Product = () => {
 
   const handleDeleteImage = async () => {
     try {
-      await deleteImageMutation.mutateAsync(id as string);
+      await deleteImageMutation.mutateAsync({
+        productId: id as string,
+        imageId: images[selectedImageIndex].id,
+      });
       await productQuery.refetch();
       toast("Image deleted successfully!");
     } catch {
       toast("Failed to delete image, please try again.");
     } finally {
       setIsDeleteDialogOpen(false);
+    }
+  };
+
+  const handleSetImageAsPrimary = async () => {
+    try {
+      await setImageAsPrimaryMutation.mutateAsync({
+        productId: id as string,
+        imageId: images[selectedImageIndex].id,
+      });
+      await productQuery.refetch();
+      toast("Image set successfully!");
+    } catch {
+      toast("Failed to set image, please try again.");
     }
   };
 
@@ -134,70 +161,106 @@ export const Product = () => {
             />
           </div>
 
-          <div className="relative w-full h-full border rounded-xl flex items-center justify-center min-h-[300px] bg-muted/20 p-4">
-            {productQuery.data.picture ? (
-              <>
-                <img
-                  src={productQuery.data.picture}
-                  alt="Product"
-                  className="w-full max-h-[300px] object-contain rounded-md"
-                />
+          <div className="flex flex-col gap-4">
+            <div className="relative w-full h-full border rounded-xl flex flex-col items-center justify-center min-h-[300px] bg-muted/20 p-4">
+              {images.length > 0 ? (
+                <>
+                  <img
+                    src={images[selectedImageIndex].imageUrl}
+                    alt="Product"
+                    className="w-full max-h-[300px] object-contain rounded-md"
+                  />
 
-                <Dialog
-                  open={isDeleteDialogOpen}
-                  onOpenChange={setIsDeleteDialogOpen}
-                >
-                  <DialogTrigger asChild>
-                    <MinusCircle
-                      className="absolute top-2 right-2 rounded-full p-1 bg-white/80 hover:bg-white shadow-md cursor-pointer text-red-500"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsDeleteDialogOpen(true);
-                      }}
-                    />
-                  </DialogTrigger>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <EllipsisVertical
+                        className="absolute top-2 right-2 rounded-full p-1 bg-muted/90 shadow-md cursor-pointer text-black"
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </DropdownMenuTrigger>
 
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Confirm Delete</DialogTitle>
-                    </DialogHeader>
-                    <p className="text-sm text-muted-foreground">
-                      Are you sure you want to delete this product image? This
-                      action can't be undone.
-                    </p>
-                    <DialogFooter className="mt-4 flex justify-end gap-2">
-                      <Button
-                        className="cursor-pointer"
-                        variant="outline"
-                        onClick={() => setIsDeleteDialogOpen(false)}
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
+                        onClick={() => {
+                          setIsDeleteDialogOpen(true);
+                        }}
                       >
-                        Cancel
-                      </Button>
-                      <Button
-                        className="cursor-pointer"
-                        variant="destructive"
-                        disabled={
-                          productQuery.isFetching ||
-                          deleteImageMutation.isPending
-                        }
-                        onClick={handleDeleteImage}
-                      >
-                        {productQuery.isFetching ||
-                        deleteImageMutation.isPending ? (
-                          <LoaderIcon />
-                        ) : (
-                          "Delete"
-                        )}
-                      </Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-              </>
-            ) : (
-              <p className="text-gray-500 text-center text-sm sm:text-base">
-                There is no image for this product.
-              </p>
-            )}
+                        Delete
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={handleSetImageAsPrimary}>
+                        Set as Primary
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+
+                  <Dialog
+                    open={isDeleteDialogOpen}
+                    onOpenChange={setIsDeleteDialogOpen}
+                  >
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Confirm Delete</DialogTitle>
+                      </DialogHeader>
+                      <p className="text-sm text-muted-foreground">
+                        Are you sure you want to delete this product image? This
+                        action can't be undone.
+                      </p>
+                      <DialogFooter className="mt-4 flex justify-end gap-2">
+                        <Button
+                          className="cursor-pointer"
+                          variant="outline"
+                          onClick={() => setIsDeleteDialogOpen(false)}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          className="cursor-pointer"
+                          variant="destructive"
+                          disabled={
+                            productQuery.isFetching ||
+                            deleteImageMutation.isPending
+                          }
+                          onClick={handleDeleteImage}
+                        >
+                          {productQuery.isFetching ||
+                          deleteImageMutation.isPending ? (
+                            <LoaderIcon />
+                          ) : (
+                            "Delete"
+                          )}
+                        </Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                </>
+              ) : (
+                <p className="text-gray-500 text-center text-sm sm:text-base">
+                  There is no image for this product.
+                </p>
+              )}
+
+              {images.length > 1 && (
+                <div className="absolute bottom-0 flex gap-2 overflow-x-auto p-2">
+                  {images.map((img: any, index: number) => (
+                    <div
+                      key={img.id ?? index}
+                      className={`border rounded-md p-1 transition bg-muted ${
+                        selectedImageIndex === index
+                          ? "border-blue-500"
+                          : "border-transparent"
+                      }`}
+                      onClick={() => setSelectedImageIndex(index)}
+                    >
+                      <img
+                        src={img.imageUrl}
+                        alt={`Thumbnail ${index + 1}`}
+                        className="w-20 h-20 object-contain rounded-md"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

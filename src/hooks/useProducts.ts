@@ -134,7 +134,7 @@ export function useUploadProductImageMutation() {
       formData.append("file", file);
 
       const response = await axiosInstance.post(
-        `/products/${productId}/image`,
+        `/products/${productId}/images`,
         formData,
         {
           headers: {
@@ -150,9 +150,33 @@ export function useUploadProductImageMutation() {
 
 export function useDeleteProductImageMutation() {
   return useMutation({
-    mutationFn: async (productId: string) => {
+    mutationFn: async ({
+      productId,
+      imageId,
+    }: {
+      productId: string;
+      imageId: number;
+    }) => {
       const response = await axiosInstance.delete(
-        `/products/${productId}/image`
+        `/products/${productId}/images/${imageId}`
+      );
+
+      return response.data;
+    },
+  });
+}
+
+export function useSetProductImageAsPrimaryMutation() {
+  return useMutation({
+    mutationFn: async ({
+      productId,
+      imageId,
+    }: {
+      productId: string;
+      imageId: number;
+    }) => {
+      const response = await axiosInstance.put(
+        `/products/${productId}/images/${imageId}/primary`
       );
 
       return response.data;
