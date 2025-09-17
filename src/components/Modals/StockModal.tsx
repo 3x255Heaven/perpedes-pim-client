@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import { MultiValueProperty, ProductType } from "@/hooks/useProducts";
 import { Badge } from "@/shared/badge";
-import { Card } from "@/shared/card";
 import { Dialog, DialogContent } from "@/shared/dialog";
 import {
   Select,
@@ -96,18 +95,19 @@ export const StockModal = ({
   );
 
   const filteredStocks = useMemo(() => {
-    return stocksForTable.filter((item) => {
-      const { unit, width, size } = filters;
-      return (
-        (!unit || item.unit === unit) &&
-        (!width || item.width === width) &&
-        (!size || item.size?.toLowerCase().includes(size.toLowerCase()))
-      );
-    });
+    return stocksForTable
+      .filter((item) => {
+        const { unit, width, size } = filters;
+        return (
+          (!unit || item.unit === unit) &&
+          (!width || item.width === width) &&
+          (!size || item.size?.toLowerCase().includes(size.toLowerCase()))
+        );
+      })
+      .sort((a, b) => a.id.localeCompare(b.id));
   }, [stocksForTable, filters]);
 
   const isFilterApplied = Boolean(filters.unit || filters.width);
-  const totalStock = filteredStocks.reduce((acc, item) => acc + item.stock, 0);
 
   if (!products.length) return null;
 
@@ -116,14 +116,14 @@ export const StockModal = ({
       open={isModalOpen === "stock"}
       onOpenChange={() => setModalOpen(null)}
     >
-      <DialogContent className="max-w-7xl w-full sm:max-w-6xl md:max-w-7xl p-0">
-        <div className="flex h-[600px] bg-white dark:bg-black text-black dark:text-white">
+      <DialogContent className="max-w-7xl w-full sm:max-w-6xl md:max-w-7xl p-0 rounded">
+        <div className="flex h-[600px] bg-white dark:bg-black text-black dark:text-white rounded">
           <div className="flex-1 p-4 overflow-auto border-r border-gray-200 dark:border-gray-700">
             <div className="flex justify-between">
               <div className="flex gap-4 mb-4">
                 <Select
-                  onValueChange={(val) =>
-                    setFilters((f) => ({ ...f, unit: val }))
+                  onValueChange={(value: any) =>
+                    setFilters((f) => ({ ...f, unit: value }))
                   }
                   value={filters.unit}
                 >
@@ -140,8 +140,8 @@ export const StockModal = ({
                 </Select>
 
                 <Select
-                  onValueChange={(val) =>
-                    setFilters((f) => ({ ...f, width: val }))
+                  onValueChange={(value: any) =>
+                    setFilters((f) => ({ ...f, width: value }))
                   }
                   value={filters.width}
                 >
@@ -169,7 +169,7 @@ export const StockModal = ({
               </div>
 
               {isFilterApplied && (
-                <div className="flex gap-2 mb-4 flex-wrap">
+                <div className="flex gap-2 mb-4 mr-10 flex-wrap">
                   {filters.unit && (
                     <Badge
                       className="flex items-center gap-2 px-2 py-1 bg-blue-100 text-black dark:bg-blue-400 dark:text-white cursor-pointer"
@@ -253,43 +253,6 @@ export const StockModal = ({
                 ))}
               </tbody>
             </table>
-          </div>
-
-          <div className="w-[400px] p-4 overflow-auto">
-            <h2 className="text-lg font-semibold mb-2">Stock Summary</h2>
-            <p className="text-sm text-gray-500 mb-4">
-              Showing stock details for {filteredStocks.length} products
-            </p>
-
-            <Card className="p-3 text-center mb-4">
-              <p className="font-bold text-lg">{totalStock}</p>
-              <p className="text-xs text-gray-500">
-                Total amount of variations in Stock
-              </p>
-            </Card>
-
-            <h3 className="font-medium mb-2">Stock Status</h3>
-            <Badge
-              className={`mb-2 ${
-                totalStock > 5
-                  ? "bg-green-100 text-green-700"
-                  : "bg-yellow-100 text-yellow-700"
-              }`}
-            >
-              {totalStock > 5 ? "In Stock" : "Low Stock"}
-            </Badge>
-
-            <h3 className="font-medium mt-6 mb-2">Products Specifications</h3>
-            <ul className="text-sm text-gray-600 space-y-1 max-h-60 overflow-auto">
-              {products.map((product) => (
-                <li key={product.id}>
-                  <strong>Product ID:</strong> {product.productId} |{" "}
-                  <strong>Size:</strong> {product.size} |{" "}
-                  <strong>Material:</strong> {product.width} |{" "}
-                  <strong>Unit:</strong> {product.unit.toLowerCase()}
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </DialogContent>
