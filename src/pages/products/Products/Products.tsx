@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDebounce } from "use-debounce";
+import { useDebouncedCallback } from "use-debounce";
 import {
   useProductsInfiniteQuery,
   useProductSearchInfiniteQuery,
@@ -20,15 +20,18 @@ const PAGE_SIZE = 10;
 
 export const Products = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [debouncedSearchTerm] = useDebounce(searchTerm, 300);
   const [sort, setSort] = useState<string>("name");
   const [order, setOrder] = useState<"asc" | "desc">("asc");
 
-  const isSearching = debouncedSearchTerm.length > 0;
+  const debouncedSetSearch = useDebouncedCallback((value: string) => {
+    setSearchTerm(value);
+  }, 300);
+
+  const isSearching = searchTerm.length > 0;
 
   const productsQuery = useProductsInfiniteQuery(PAGE_SIZE, sort, order);
   const searchQuery = useProductSearchInfiniteQuery(
-    debouncedSearchTerm,
+    searchTerm,
     PAGE_SIZE,
     sort,
     order
@@ -65,8 +68,7 @@ export const Products = () => {
 
             <Input
               placeholder="Search products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => debouncedSetSearch(e.target.value)}
               className="sm:w-[250px]"
             />
           </div>

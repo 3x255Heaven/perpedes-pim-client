@@ -27,7 +27,9 @@ export function ProductCard({ product }: ProductCardProps) {
           <img
             src={product.picture}
             alt={product.name}
-            className="h-full w-full object-contain transition-transform duration-300 hover:scale-105"
+            loading="lazy"
+            className="h-full w-full object-contain opacity-0 transition-opacity duration-500"
+            onLoad={(e) => e.currentTarget.classList.add("opacity-100")}
           />
 
           <div
