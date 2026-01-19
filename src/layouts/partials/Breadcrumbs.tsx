@@ -19,7 +19,9 @@ export const Breadcrumbs = () => {
           <BreadcrumbLink href="/products">
             {breadcrumbs[location.pathname as keyof typeof breadcrumbs]
               ? breadcrumbs[location.pathname as keyof typeof breadcrumbs].base
-              : "Products"}
+              : location.pathname.includes("products")
+                ? "Products"
+                : "Clients"}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator className="hidden md:block" />
@@ -27,7 +29,9 @@ export const Breadcrumbs = () => {
           <BreadcrumbPage className="font-bold uppercase">
             {breadcrumbs[location.pathname as keyof typeof breadcrumbs]
               ? breadcrumbs[location.pathname as keyof typeof breadcrumbs].label
-              : "Product Details"}
+              : location.pathname.includes("products")
+                ? "Product Details"
+                : "Client Details"}
           </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>

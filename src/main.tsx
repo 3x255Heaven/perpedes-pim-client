@@ -8,8 +8,11 @@ import { NotFound } from "@/components/NotFound/NotFound";
 import { ManageProducts } from "@/pages/products/ManageProducts/ManageProducts";
 import { Products } from "@/pages/products/Products/Products";
 import { Product } from "@/pages/products/Product/Product";
+import { Clients } from "@/pages/clients/Clients/Clients";
+import { Client } from "@/pages/clients/Client/Client";
+import { ManageClients } from "./pages/clients/ManageClients/ManageClients";
+import { ManageClientsRelationship } from "@/pages/clients/ManageClientsRelationship/ManageClientsRelationship";
 import { Orders } from "@/pages/orders/Orders";
-import { Customers } from "@/pages/customers/Customers";
 import { CreateOrders } from "@/pages/orders/CreateOrder";
 import { Employees } from "@/pages/employees/Employees";
 import { AddEmployee } from "@/pages/employees/AddEmployee";
@@ -52,7 +55,13 @@ const router = createBrowserRouter([
       { path: "products", element: <Products /> },
       { path: "orders", element: <Orders /> },
       { path: "create-order", element: <CreateOrders /> },
-      { path: "customers", element: <Customers /> },
+      { path: "clients", element: <Clients /> },
+      { path: "clients/:id", element: <Client /> },
+      { path: "add-clients", element: <ManageClients /> },
+      {
+        path: "add-clients-relationship",
+        element: <ManageClientsRelationship />,
+      },
       { path: "employees", element: <Employees /> },
       { path: "add-employee", element: <AddEmployee /> },
       { path: "account", element: <Account /> },
@@ -80,5 +89,5 @@ createRoot(document.getElementById("root")!).render(
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
-  </StrictMode>
+  </StrictMode>,
 );

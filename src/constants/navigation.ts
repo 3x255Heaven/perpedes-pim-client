@@ -19,7 +19,7 @@ export const platformNavigationItems = [
         url: "/products",
       },
       {
-        title: "Add New Product",
+        title: "Add New Products",
         url: "/add-product",
       },
     ],
@@ -41,14 +41,22 @@ export const platformNavigationItems = [
     ],
   },
   {
-    title: "Customers",
+    title: "Clients",
     url: "/",
     icon: ShoppingCart,
     isActive: true,
     items: [
       {
-        title: "View All Customers",
-        url: "/customers",
+        title: "View All Clients",
+        url: "/clients",
+      },
+      {
+        title: "Add New Clients",
+        url: "/add-clients",
+      },
+      {
+        title: "Add New Clients Relationship",
+        url: "/add-clients-relationship",
       },
     ],
   },

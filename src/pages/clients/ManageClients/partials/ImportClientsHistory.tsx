@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { RefreshCcw } from "lucide-react";
-import { ImportHistoryTable } from "./ImportHistoryTable";
-import { useProductsLogsQuery } from "@/hooks/useLogs";
+import { useClientsLogsQuery } from "@/hooks/useLogs";
+import { ImportClientsHistoryTable } from "./ImportClientsTable";
 
-export const ImportHistory = () => {
+export const ImportClientsHistory = () => {
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
 
-  const logsQuery = useProductsLogsQuery(pageIndex, pageSize);
+  const logsQuery = useClientsLogsQuery(pageIndex, pageSize);
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -26,7 +26,7 @@ export const ImportHistory = () => {
           </span>
         </div>
       ) : (
-        <ImportHistoryTable
+        <ImportClientsHistoryTable
           data={logsQuery.data?.logs || []}
           total={logsQuery.data?.totalElements || 0}
           pageIndex={pageIndex}

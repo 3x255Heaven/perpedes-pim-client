@@ -56,7 +56,7 @@ export function SidebarNavigation({
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title} className="m-1">
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
+                        <a href={subItem.url} className="h-6 py-6">
                           <span>{subItem.title}</span>
                         </a>
                       </SidebarMenuSubButton>

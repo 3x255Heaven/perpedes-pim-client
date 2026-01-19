@@ -1,7 +1,7 @@
 export const breadcrumbs = {
   "/add-product": {
     base: "Products",
-    label: "Add New Product",
+    label: "Add New Products",
   },
   "/products": {
     base: "Products",
@@ -10,7 +10,19 @@ export const breadcrumbs = {
   "/product": { base: "Products", label: "Product" },
   "/orders": { base: "Orders", label: "View All Orders" },
   "/create-order": { base: "Orders", label: "Create New Order" },
-  "/customers": { base: "Customers", label: "View All Customers" },
+  "/clients": { base: "Clients", label: "View All Clients" },
+  "/client": {
+    base: "Clients",
+    label: "Client",
+  },
+  "/add-clients": {
+    base: "Clients",
+    label: "Add New Clients",
+  },
+  "/add-clients-relationship": {
+    base: "Clients",
+    label: "Add New Clients Relationship",
+  },
   "/employees": { base: "Employees", label: "View All Employees" },
   "/add-employee": { base: "Employees", label: "Add New Employee" },
   "/analytics-sales": { base: "Dashboard", label: "Sales Overview" },
