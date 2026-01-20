@@ -6,19 +6,27 @@ import {
   useUpdateClientMutation,
 } from "@/hooks/useClients";
 import { Spinner } from "@/shared/spinner";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { LoaderIcon } from "lucide-react";
 import { toast } from "sonner";
 import { ClientFields } from "./partials/ClientFields";
+import { UsersTable } from "@/pages/users/Users/partials/UsersTable";
+import { useUsersByClientQuery } from "@/hooks/useUsers";
 
 export const Client = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const formRef = useRef<HTMLFormElement | null>(null);
 
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(10);
+
   const clientQuery = useClientQuery(id as string);
+  const usersQuery = useUsersByClientQuery(id as string, pageIndex, pageSize);
   const updateClientMutation = useUpdateClientMutation();
   const deleteClientMutation = useDeleteClientMutation();
+
+  const users = usersQuery.data?.content ?? [];
 
   const handleSubmit = () => {
     if (formRef.current) {
@@ -77,7 +85,7 @@ export const Client = () => {
     );
   };
 
-  if (clientQuery.isPending) {
+  if (clientQuery.isPending || usersQuery.isPending) {
     return (
       <div className="flex h-[92vh] flex-col justify-center items-center gap-4 p-4 pt-0">
         <Spinner />
@@ -126,6 +134,30 @@ export const Client = () => {
         <div className="grid gap-6 lg:grid-cols-1">
           <div className="flex flex-col gap-6">
             <ClientFields client={clientQuery.data} ref={formRef} />
+          </div>
+        </div>
+
+        <div className="flex-col justify-between items-center">
+          <h1 className="text-4xl my-10">Client's Users</h1>
+
+          <div className="flex flex-col justify-center items-center">
+            {users.length > 0 ? (
+              <UsersTable
+                data={users}
+                total={usersQuery.data?.totalElements || 0}
+                pageIndex={pageIndex}
+                pageSize={pageSize}
+                onPageChange={setPageIndex}
+                onPageSizeChange={(size) => {
+                  setPageSize(size);
+                  setPageIndex(0);
+                }}
+              />
+            ) : (
+              <p className="col-span-full text-center text-gray-500">
+                No users found.
+              </p>
+            )}
           </div>
         </div>
       </div>

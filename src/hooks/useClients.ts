@@ -82,6 +82,21 @@ export function useClientsSearchQuery(
   });
 }
 
+export function useClientsSearchQueryAll(search: string) {
+  return useQuery({
+    queryKey: ["clients", search],
+    queryFn: async () => {
+      const response = await axiosInstance.get("/clients/search", {
+        params: {
+          q: search,
+        },
+      });
+
+      return response.data;
+    },
+  });
+}
+
 export function useImportClientsMutation() {
   return useMutation({
     mutationFn: async (file: File) => {
@@ -131,6 +146,7 @@ export function useClientQuery(clientId: string) {
       const response = await axiosInstance.get(`/clients/${clientId}`);
       return response.data;
     },
+    enabled: !!clientId,
   });
 }
 

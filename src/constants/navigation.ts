@@ -5,6 +5,7 @@ import {
   PackageSearch,
   ChartColumn,
   ChartNoAxesCombined,
+  CircleUserRound
 } from "lucide-react";
 
 export const platformNavigationItems = [
@@ -57,6 +58,22 @@ export const platformNavigationItems = [
       {
         title: "Add New Clients Relationship",
         url: "/add-clients-relationship",
+      },
+    ],
+  },
+  {
+    title: "Users",
+    url: "/",
+    icon: CircleUserRound,
+    isActive: true,
+    items: [
+      {
+        title: "View All Users",
+        url: "/users",
+      },
+      {
+        title: "Add New User",
+        url: "/add-user",
       },
     ],
   },

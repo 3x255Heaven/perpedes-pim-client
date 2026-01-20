@@ -33,44 +33,36 @@ import {
 } from "@/shared/select";
 
 import { Button } from "@/shared/button";
-import { Client } from "@/hooks/useClients";
+import { User } from "@/hooks/useUsers";
 
-export const columns: ColumnDef<Client>[] = [
+export const columns: ColumnDef<User>[] = [
+  {
+    accessorKey: "username",
+    header: "Username",
+  },
+  {
+    accessorKey: "firstName",
+    header: "First name",
+  },
+  {
+    accessorKey: "lastName",
+    header: "Last name",
+  },
+  {
+    accessorKey: "role",
+    header: "Role",
+  },
   {
     accessorKey: "clientId",
     header: "Client ID",
   },
   {
-    accessorKey: "name1",
-    header: "Name",
-  },
-  {
-    accessorKey: "representative",
-    header: "Representative",
-  },
-  {
-    accessorKey: "telefon1",
-    header: "Phone",
-  },
-  {
-    accessorKey: "area",
-    header: "Area",
-  },
-  {
-    accessorKey: "street1",
-    header: "Street",
-  },
-  {
-    accessorKey: "addressNumber",
-    header: "Address Number",
-  },
-  {
-    accessorKey: "zipCode",
-    header: "ZIP",
+    accessorKey: "clientBusinessId",
+    header: "Client Business ID",
   },
 ];
 
-export const ClientsTable = ({
+export const UsersTable = ({
   data,
   total,
   pageIndex,
@@ -78,7 +70,7 @@ export const ClientsTable = ({
   onPageChange,
   onPageSizeChange,
 }: {
-  data: Client[];
+  data: User[];
   total: number;
   pageIndex: number;
   pageSize: number;
@@ -141,7 +133,7 @@ export const ClientsTable = ({
                   key={row.id}
                   className="h-[3rem] cursor-pointer"
                   onClick={() => {
-                    navigate(`/clients/${row.original.id}`);
+                    navigate(`/users/${row.original.id}`);
                   }}
                 >
                   {row.getVisibleCells().map((cell) => (

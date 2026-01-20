@@ -23,6 +23,15 @@ export const breadcrumbs = {
     base: "Clients",
     label: "Add New Clients Relationship",
   },
+  "/users": { base: "Users", label: "View All Clients" },
+  "/user": {
+    base: "Users",
+    label: "User",
+  },
+  "/add-user": {
+    base: "Users",
+    label: "Add New User",
+  },
   "/employees": { base: "Employees", label: "View All Employees" },
   "/add-employee": { base: "Employees", label: "Add New Employee" },
   "/analytics-sales": { base: "Dashboard", label: "Sales Overview" },

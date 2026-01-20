@@ -152,7 +152,7 @@ export const ProductsTable = ({
 
   return (
     <>
-      <div className="rounded-md border">
+      <div className="rounded-md border w-full">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -12,6 +12,9 @@ import { Clients } from "@/pages/clients/Clients/Clients";
 import { Client } from "@/pages/clients/Client/Client";
 import { ManageClients } from "./pages/clients/ManageClients/ManageClients";
 import { ManageClientsRelationship } from "@/pages/clients/ManageClientsRelationship/ManageClientsRelationship";
+import { Users } from "@/pages/users/Users/Users";
+import { User } from "@/pages/users/User/User";
+import { ManageUser } from "@/pages/users/ManageUsers/ManageUser";
 import { Orders } from "@/pages/orders/Orders";
 import { CreateOrders } from "@/pages/orders/CreateOrder";
 import { Employees } from "@/pages/employees/Employees";
@@ -62,6 +65,9 @@ const router = createBrowserRouter([
         path: "add-clients-relationship",
         element: <ManageClientsRelationship />,
       },
+      { path: "users", element: <Users /> },
+      { path: "users/:id", element: <User /> },
+      { path: "add-user", element: <ManageUser /> },
       { path: "employees", element: <Employees /> },
       { path: "add-employee", element: <AddEmployee /> },
       { path: "account", element: <Account /> },
